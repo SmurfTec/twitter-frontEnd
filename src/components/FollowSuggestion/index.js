@@ -30,29 +30,25 @@ function FollowSuggestion({ suggestionUser, icon = true }) {
             <Avatar
                size='medium'
                src={
-                  suggestionUser.avatar ||
-                  `https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${suggestionUser.name}`
+                  user.avatar ||
+                  `https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${user.name}`
                }
-               onClick={() =>
-                  history.push(`/${suggestionUser.username}`)
-               }
+               onClick={() => history.push(`/${user.username}`)}
             />
 
             <div className='extra__FollowSuggestion--info'>
-               <Link to={`${suggestionUser.username}`}>
-                  <TextBody bold>{suggestionUser.username}</TextBody>
+               <Link to={`${user.username}`}>
+                  <TextBody bold>{user.username}</TextBody>
                </Link>
 
-               <TextBody>
-                  {suggestionUser.fullname ?? suggestionUser.username}
-               </TextBody>
+               <TextBody>{user.fullname ?? user.username}</TextBody>
             </div>
          </div>
          {icon && (
             <Follow
                isFollowing={isFollowing}
-               userId={suggestionUser._id}
-               username={suggestionUser.username}
+               userId={user._id}
+               username={user.username}
             >
                Follow
             </Follow>

@@ -1,47 +1,43 @@
-import React, { useContext } from 'react'
+import React, { useContext } from 'react';
 
-import './Sidebar.css'
+import './Sidebar.css';
 
-import Navigation from '../Navigation/Navigation'
-import ThemeButton from '../ThemeButton/ThemeButton'
-import ProfileBox from '../ProfileBox/ProfileBox'
-import Menu from '../Menu/Menu'
-import { Tweet } from '../icons'
-import FollowSuggestion from '../FollowSuggestion'
+import Navigation from '../Navigation/Navigation';
+import ThemeButton from '../ThemeButton/ThemeButton';
+import ProfileBox from '../ProfileBox/ProfileBox';
+import Menu from '../Menu/Menu';
+import { Tweet } from '../icons';
+import FollowSuggestion from '../FollowSuggestion';
 
-import { UserContext } from "../../context/UserContext";
+import { UserContext } from '../../context/UserContext';
 
 function Sidebar({ flat }) {
+   const { setUser, user } = useContext(UserContext);
 
-    const { setUser, user } = useContext(UserContext);
+   const handleLogout = () => {
+      setUser(null);
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
+   };
 
-    const handleLogout = () => {
-        setUser(null)
-        localStorage.removeItem('user')
-        localStorage.removeItem('token')
-    }
+   return (
+      <div className='sidebar'>
+         <Navigation flat={flat} />
 
-    return (
-        <div className="sidebar">
-            <Navigation flat={flat} />
+         <div className='sidebar__tweet'>
+            <ThemeButton href='/' primary size='large' full={!flat}>
+               {flat ? <Tweet /> : 'Tweet'}
+            </ThemeButton>
+         </div>
 
-            <div className="sidebar__tweet">
-                <ThemeButton href='/' primary size="large" full={!flat} >
-                    {flat ? <Tweet /> : 'Tweet'}
-                </ThemeButton>
-            </div>
-
-
-            <div className="sidebar__profile">
-                <Menu
-                    title={<ProfileBox flat={flat} user={user} />}
-                >
-                    <FollowSuggestion icon={false} user={user} />
-                    <span onClick={handleLogout}>Log out</span>
-                </Menu>
-            </div>
-        </div>
-    )
+         <div className='sidebar__profile'>
+            <Menu title={<ProfileBox flat={flat} user={user} />}>
+               <FollowSuggestion icon={false} suggestionUser={user} />
+               <span onClick={handleLogout}>Log out</span>
+            </Menu>
+         </div>
+      </div>
+   );
 }
 
-export default Sidebar
+export default Sidebar;

@@ -18,14 +18,14 @@ function Register({ setAuth }) {
 
    const [loading, setLoading] = useState(false);
 
-   const handleLogin = async (e) => {
+   const handleSignUp = async (e) => {
       e.preventDefault();
 
       if (!username || !password) {
          return toast.error('You need to fill in all the fields');
       }
 
-      const body = { username: username, password: password };
+      const body = { email: username, password: password };
       setLoading(true);
       try {
          const { token } = await client('/users/signup', { body });
@@ -47,7 +47,7 @@ function Register({ setAuth }) {
 
    return (
       <>
-         <form onSubmit={handleLogin}>
+         <form onSubmit={handleSignUp}>
             <div className='auth-page__logo'>
                <Button icon>
                   <Twitter />
@@ -63,7 +63,7 @@ function Register({ setAuth }) {
             <div className='form-control'>
                <input
                   type='text'
-                  placeholder='Username or Email'
+                  placeholder='Email'
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                />
