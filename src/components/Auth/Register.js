@@ -28,7 +28,7 @@ function Register({ setAuth }) {
       const body = { username: username, password: password };
       setLoading(true);
       try {
-         const { token } = await client('/auth/signup', { body });
+         const { token } = await client('/users/signup', { body });
          localStorage.setItem('token', token);
       } catch (err) {
          return toast.error(err.message);

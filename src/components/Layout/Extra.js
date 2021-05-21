@@ -14,7 +14,6 @@ import Loading from '../loading';
 import { Options } from '../icons';
 import SearchBox from '../SearchBox/SearchBox';
 
-import { UserContext } from '../../context/UserContext';
 import { FeedContext } from '../../context/FeedContext';
 
 function Extra() {
@@ -66,7 +65,10 @@ function Extra() {
                   src='lists'
                >
                   {whoFollow?.slice(0, 4).map((user) => (
-                     <FollowSuggestion key={user._id} user={user} />
+                     <FollowSuggestion
+                        key={user._id}
+                        suggestionUser={user}
+                     />
                   ))}
 
                   <div style={{ textAlign: 'center' }}>
