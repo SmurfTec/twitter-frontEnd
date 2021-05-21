@@ -15,20 +15,35 @@ function Register({ setAuth }) {
 
    const [username, setUsername] = useState('');
    const [password, setPassword] = useState('');
+   const [passwordConfirm, setPasswordConfirm] = useState('');
+   const [email, setEmail] = useState('');
 
    const [loading, setLoading] = useState(false);
 
    const handleSignUp = async (e) => {
       e.preventDefault();
 
-      if (!username || !password) {
+      if (!username || !password || !email || !passwordConfirm) {
          return toast.error('You need to fill in all the fields');
       }
 
-      const body = { email: username, password: password };
+      if (password !== passwordConfirm)
+         return toast.error('Password Confirm Must match Password !');
+
+      const body = {
+         username: username,
+         password: password,
+         passwordConfirm: passwordConfirm,
+         email: email,
+      };
       setLoading(true);
       try {
-         const { token } = await client('/users/signup', { body });
+         const data = await client('/users/signup', { body });
+
+         console.log(`data`, data);
+
+         const { token, user } = data;
+         console.log(`token`, token);
          localStorage.setItem('token', token);
       } catch (err) {
          return toast.error(err.message);
@@ -63,9 +78,17 @@ function Register({ setAuth }) {
             <div className='form-control'>
                <input
                   type='text'
-                  placeholder='Email'
+                  placeholder='Username'
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
+               />
+            </div>
+            <div className='form-control'>
+               <input
+                  type='text'
+                  placeholder='Email'
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                />
             </div>
             <div
@@ -77,6 +100,17 @@ function Register({ setAuth }) {
                   placeholder='Password'
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+               />
+            </div>
+            <div
+               className='form-control'
+               style={{ marginBottom: '15px' }}
+            >
+               <input
+                  type='password'
+                  placeholder='Password Confirm'
+                  value={passwordConfirm}
+                  onChange={(e) => setPasswordConfirm(e.target.value)}
                />
             </div>
 
