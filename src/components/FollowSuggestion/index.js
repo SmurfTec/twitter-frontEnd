@@ -15,7 +15,6 @@ function FollowSuggestion({ suggestionUser, icon = true }) {
    const [isFollowing, setIsFollowing] = useState(false);
 
    useEffect(() => {
-      console.clear();
       console.log(
          `suggestionUser.followers`,
          suggestionUser.followers

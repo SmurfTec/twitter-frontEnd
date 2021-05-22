@@ -58,7 +58,7 @@ const useStyles = makeStyles({
 
 const User = (props) => {
    const classes = useStyles();
-   const { removeUser, updateAUser } = useContext(UsersContext);
+   const { removeSupport } = useContext(UsersContext);
    const {
       users,
       handleClick,
@@ -96,7 +96,7 @@ const User = (props) => {
    };
    const deleteAUser = () => {
       toggleDeleteConfirmDialog();
-      removeUser(deleteUserId);
+      removeSupport(deleteUserId);
       // deleteUserRedux(deleteUserId);
    };
 

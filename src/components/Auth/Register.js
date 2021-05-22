@@ -38,7 +38,7 @@ function Register({ setAuth }) {
       };
       setLoading(true);
       try {
-         const data = await client('/users/signup', { body });
+         const data = await client('/users/signup', { body }, 'POST');
 
          console.log(`data`, data);
 

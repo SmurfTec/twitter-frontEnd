@@ -23,6 +23,7 @@ import { client } from './utils';
 import { UserContext } from './context/UserContext';
 import DashboardLayout from './components/Layout/DashboardLayout/DashboardLayout';
 import Users from './components/Users/Users';
+import Support from './components/Support/Support';
 
 function Router() {
    const { setWhoFollow, setTags } = useContext(FeedContext);
@@ -41,11 +42,12 @@ function Router() {
    }, []);
 
    let routes;
-   if (user.role === 'admin') {
+   if (user.role === 'admin' || user.role === 'support') {
       routes = (
          <Switch>
             <DashboardLayout component={Users} path='/users' />
-            <DashboardLayout component={Users} path='/' />
+            <DashboardLayout component={Support} path='/support' />
+            <DashboardLayout path='/' />
          </Switch>
       );
    } else {

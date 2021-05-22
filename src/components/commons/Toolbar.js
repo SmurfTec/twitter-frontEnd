@@ -15,6 +15,7 @@ import {
    Search as SearchIcon,
    Filter as FilterIcon,
    Trash2,
+   UserPlus as UserAddIcon,
 } from 'react-feather';
 import { genMediaQuery } from '../../utils/mediaStyles';
 
@@ -47,6 +48,7 @@ const Toolbar = ({
    handleDelete,
    selectedUserIds,
    toggleFilter,
+   addUser,
    user,
    ...rest
 }) => {
@@ -75,6 +77,17 @@ const Toolbar = ({
                Filter
                <FilterIcon />
             </Button>
+            {addUser && (
+               <Button
+                  color='primary'
+                  variant='contained'
+                  className={classes.ToolbarBtns}
+                  onClick={addUser}
+               >
+                  Add Support
+                  <UserAddIcon />
+               </Button>
+            )}
          </Box>
          <Box mt={3}>
             <Card>

@@ -39,9 +39,9 @@ const Results = ({
    // const [selectedUserIds, setSelectedUserIds] = useState([]);
 
    const handleSelectOne = (event, id) => {
-      const selectedIndex = selectedUserIds.indexOf(id);
-
-      setSelectedUserIds([id]);
+      if (selectedUserIds.length === 0) setSelectedUserIds([id]);
+      else if (selectedUserIds[0] === id) setSelectedUserIds([]);
+      else setSelectedUserIds([id]);
    };
 
    return (

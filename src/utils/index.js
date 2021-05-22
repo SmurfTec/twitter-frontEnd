@@ -46,8 +46,14 @@ export const client = (
       headers.Authorization = `Bearer ${token}`;
    }
 
+   let temp = 'GET';
+   if (method) temp = method;
+   else if (!body) temp = 'GET';
+   else temp = 'POST';
+
    const config = {
-      method: method ? method : body ? 'POST' : 'GET',
+      method: temp,
+      // method: method ? method : body ? 'POST' : 'GET',
       ...customConfig,
       headers: {
          ...headers,
@@ -59,6 +65,8 @@ export const client = (
       config.body = JSON.stringify(body);
    }
 
+   console.clear();
+   console.log(`body`, body);
    return fetch(`${API_BASE_URL}${endpoint}`, config).then(
       async (res) => {
          const data = await res.json();

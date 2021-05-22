@@ -28,7 +28,7 @@ function Login({ setAuth }) {
       const body = { email: username, password: password };
       setLoading(true);
       try {
-         const data = await client('/users/login', { body });
+         const data = await client('/users/login', { body }, 'POST');
          console.log(`data`, data);
 
          const { token, user } = data;
