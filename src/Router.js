@@ -1,5 +1,10 @@
-import React, { useContext, useEffect } from 'react'
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
+import {
+   BrowserRouter,
+   Switch,
+   Route,
+   Redirect,
+} from 'react-router-dom';
 
 import Profile from './pages/Profile/Profile';
 
@@ -15,50 +20,63 @@ import TweetDetail from './pages/TweetDetail/TweetDetail';
 import Lists from './pages/Lists/Lists';
 import { FeedContext } from './context/FeedContext';
 import { client } from './utils';
+import { UserContext } from './context/UserContext';
+import DashboardLayout from './components/Layout/DashboardLayout/DashboardLayout';
+import Users from './components/Users/Users';
 
 function Router() {
+   const { setWhoFollow, setTags } = useContext(FeedContext);
+   const { user } = useContext(UserContext);
 
-    const { setWhoFollow, setTags } = useContext(FeedContext);
+   useEffect(() => {
+      client('/users').then((response) => {
+         setWhoFollow(
+            response.data.filter((user) => !user.isFollowing)
+         );
+      });
 
-    useEffect(() => {
+      client('/posts/tags').then((response) => {
+         setTags(response.data);
+      });
+   }, []);
 
-        client("/users")
-            .then((response) => {
-                setWhoFollow(response.data.filter((user) => !user.isFollowing));
-            });
+   let routes;
+   if (user.role === 'admin') {
+      routes = (
+         <Switch>
+            <DashboardLayout component={Users} path='/users' />
+            <DashboardLayout component={Users} path='/' />
+         </Switch>
+      );
+   } else {
+      routes = (
+         <Layout>
+            <Switch>
+               <Route exact path='/' component={Home} />
+               <Route exact path='/more' component={More} />
+               <Route exact path='/explore' component={Explore} />
+               <Route exact path='/lists' component={Lists} />
+               <Route
+                  exact
+                  path='/notifications'
+                  component={Notifications}
+               />
+               <Route exact path='/bookmarks' component={Bookmarks} />
+               <Route path='/accounts/edit' component={EditProfile} />
 
+               <Route exact path={`/:handle`} component={Profile} />
+               <Route
+                  exact
+                  path={`/:handle/status/:tweetId`}
+                  component={TweetDetail}
+               />
+               <Redirect from='*' to='/' />
+            </Switch>
+         </Layout>
+      );
+   }
 
-        client("/posts/tags")
-            .then((response) => {
-                setTags(response.data);
-            });
-
-
-    }, [])
-
-    return (
-        <BrowserRouter>
-            <Layout>
-                <Switch>
-                    <Route exact path="/" component={Home} />
-                    <Route exact path="/more" component={More} />
-                    <Route exact path="/explore" component={Explore} />
-                    <Route exact path="/lists" component={Lists} />
-                    <Route exact path="/notifications" component={Notifications} />
-                    <Route exact path="/bookmarks" component={Bookmarks} />
-                    <Route path="/accounts/edit" component={EditProfile} />
-
-                    <Route exact path={`/:handle`} component={Profile} />
-                    <Route
-                        exact
-                        path={`/:handle/status/:tweetId`}
-                        component={TweetDetail}
-                    />
-                    <Redirect from="*" to="/" />
-                </Switch>
-            </Layout>
-        </BrowserRouter>
-    )
+   return <BrowserRouter>{routes}</BrowserRouter>;
 }
 
-export default Router
+export default Router;

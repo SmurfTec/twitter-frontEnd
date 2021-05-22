@@ -1,64 +1,66 @@
 {
-  "name": "twitter-frontend",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@material-ui/core": "^4.11.4",
-    "@material-ui/icons": "^4.11.2",
-    "@material-ui/styles": "^4.11.4",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "axios": "^0.21.1",
-    "clsx": "^1.1.1",
-    "emoji-mart": "^3.0.0",
-    "formik": "^2.2.7",
-    "history": "^5.0.0",
-    "prop-types": "^15.7.2",
-    "react": "^16.13.1",
-    "react-copy-to-clipboard": "^5.0.3",
-    "react-dom": "^16.13.1",
-    "react-feather": "^2.0.9",
-    "react-perfect-scrollbar": "^1.5.8",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3",
-    "react-textarea-autosize": "^8.2.0",
-    "react-toastify": "^6.0.8",
-    "uuid": "^8.3.2",
-    "yup": "^0.32.9"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "@babel/core": "^7.11.6",
-    "@storybook/addon-actions": "^6.0.21",
-    "@storybook/addon-essentials": "^6.0.21",
-    "@storybook/addon-links": "^6.0.21",
-    "@storybook/node-logger": "^6.0.21",
-    "@storybook/preset-create-react-app": "^3.1.4",
-    "@storybook/react": "^6.0.21",
-    "babel-loader": "^8.1.0",
-    "react-is": "^16.13.1"
-  }
+   "name": "twitter-frontend",
+   "version": "0.1.0",
+   "private": true,
+   "dependencies": {
+      "@material-ui/core": "^4.11.4",
+      "@material-ui/icons": "^4.11.2",
+      "@material-ui/styles": "^4.11.4",
+      "@testing-library/jest-dom": "^4.2.4",
+      "@testing-library/react": "^9.3.2",
+      "@testing-library/user-event": "^7.1.2",
+      "axios": "^0.21.1",
+      "clsx": "^1.1.1",
+      "emoji-mart": "^3.0.0",
+      "formik": "^2.2.7",
+      "history": "^5.0.0",
+      "prop-types": "^15.7.2",
+      "react": "^16.13.1",
+      "react-copy-to-clipboard": "^5.0.3",
+      "react-dom": "^16.13.1",
+      "react-feather": "^2.0.9",
+      "react-helmet": "^6.1.0",
+      "react-perfect-scrollbar": "^1.5.8",
+      "react-router-dom": "^5.2.0",
+      "react-scripts": "3.4.3",
+      "react-textarea-autosize": "^8.2.0",
+      "react-toastify": "^6.0.8",
+      "uuid": "^8.3.2",
+      "validator": "^13.6.0",
+      "yup": "^0.32.9"
+   },
+   "scripts": {
+      "start": "react-scripts start",
+      "build": "react-scripts build",
+      "test": "react-scripts test",
+      "eject": "react-scripts eject",
+      "storybook": "start-storybook -p 6006 -s public",
+      "build-storybook": "build-storybook -s public"
+   },
+   "eslintConfig": {
+      "extends": "react-app"
+   },
+   "browserslist": {
+      "production": [
+         ">0.2%",
+         "not dead",
+         "not op_mini all"
+      ],
+      "development": [
+         "last 1 chrome version",
+         "last 1 firefox version",
+         "last 1 safari version"
+      ]
+   },
+   "devDependencies": {
+      "@babel/core": "^7.11.6",
+      "@storybook/addon-actions": "^6.0.21",
+      "@storybook/addon-essentials": "^6.0.21",
+      "@storybook/addon-links": "^6.0.21",
+      "@storybook/node-logger": "^6.0.21",
+      "@storybook/preset-create-react-app": "^3.1.4",
+      "@storybook/react": "^6.0.21",
+      "babel-loader": "^8.1.0",
+      "react-is": "^16.13.1"
+   }
 }

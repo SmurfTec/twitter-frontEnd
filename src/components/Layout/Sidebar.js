@@ -12,13 +12,7 @@ import FollowSuggestion from '../FollowSuggestion';
 import { UserContext } from '../../context/UserContext';
 
 function Sidebar({ flat }) {
-   const { setUser, user } = useContext(UserContext);
-
-   const handleLogout = () => {
-      setUser(null);
-      localStorage.removeItem('user');
-      localStorage.removeItem('token');
-   };
+   const { setUser, user, logout } = useContext(UserContext);
 
    return (
       <div className='sidebar'>
@@ -33,7 +27,7 @@ function Sidebar({ flat }) {
          <div className='sidebar__profile'>
             <Menu title={<ProfileBox flat={flat} user={user} />}>
                <FollowSuggestion icon={false} suggestionUser={user} />
-               <span onClick={handleLogout}>Log out</span>
+               <span onClick={logout}>Log out</span>
             </Menu>
          </div>
       </div>
