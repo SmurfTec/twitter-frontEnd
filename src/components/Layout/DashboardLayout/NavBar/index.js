@@ -18,6 +18,7 @@ import {
    Package,
    DollarSign,
    Key,
+   HelpCircle,
 } from 'react-feather';
 import NavItem from './NavItem';
 import { UserContext } from '../../../../context/UserContext';
@@ -32,6 +33,11 @@ const items = [
       href: '/support',
       icon: Printer,
       title: 'Support',
+   },
+   {
+      href: '/questions',
+      icon: HelpCircle,
+      title: 'questions',
    },
 
    {

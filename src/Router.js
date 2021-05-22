@@ -24,6 +24,7 @@ import { UserContext } from './context/UserContext';
 import DashboardLayout from './components/Layout/DashboardLayout/DashboardLayout';
 import Users from './components/Users/Users';
 import Support from './components/Support/Support';
+import Questions from './components/Questions/Questions';
 
 function Router() {
    const { setWhoFollow, setTags } = useContext(FeedContext);
@@ -47,6 +48,10 @@ function Router() {
          <Switch>
             <DashboardLayout component={Users} path='/users' />
             <DashboardLayout component={Support} path='/support' />
+            <DashboardLayout
+               component={Questions}
+               path='/questions'
+            />
             <DashboardLayout path='/' />
          </Switch>
       );

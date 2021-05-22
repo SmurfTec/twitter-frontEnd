@@ -113,7 +113,7 @@ const Toolbar = ({
                               </InputAdornment>
                            ),
                         }}
-                        placeholder='Search customer'
+                        placeholder='Search ...'
                         variant='outlined'
                         value={state.searchTxt}
                         onChange={hanldeTxtChange}
