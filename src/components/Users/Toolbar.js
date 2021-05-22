@@ -13,7 +13,6 @@ import {
 } from '@material-ui/core';
 import {
    Search as SearchIcon,
-   UserPlus as UserAddIcon,
    Filter as FilterIcon,
    Trash2,
 } from 'react-feather';
@@ -47,7 +46,6 @@ const Toolbar = ({
    searchResults,
    handleDelete,
    selectedUserIds,
-   addUser,
    toggleFilter,
    user,
    ...rest
@@ -76,15 +74,6 @@ const Toolbar = ({
             >
                Filter
                <FilterIcon />
-            </Button>
-            <Button
-               color='primary'
-               variant='contained'
-               className={classes.ToolbarBtns}
-               onClick={addUser}
-            >
-               Add {user && user === 'printer' ? 'Printer' : 'User'}
-               <UserAddIcon />
             </Button>
          </Box>
          <Box mt={3}>

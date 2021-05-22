@@ -28,9 +28,19 @@ export const UserProvider = ({ children }) => {
       })();
    };
 
-   const addNewUser = async (newUser) => {};
-   const deleteMany = async (newUser) => {};
-   const updateUser = async (newUser) => {};
+   const deleteMany = async (deleteId) => {
+      const res = await client(`/users/${deleteId}`, {}, 'DELETE');
+
+      console.log('res', res);
+      // * Remove User from Users
+      const newUsers = usersObj.users.filter(
+         (user) => user._id !== deleteId
+      );
+      setUsersObj({
+         ...usersObj,
+         users: newUsers,
+      });
+   };
 
    const logout = () => {
       setUser(null);
@@ -44,9 +54,7 @@ export const UserProvider = ({ children }) => {
             user,
             setUser,
             logout,
-            addNewUser,
             deleteMany,
-            updateUser,
             usersObj,
          }}
       >

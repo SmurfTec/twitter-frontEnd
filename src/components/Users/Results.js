@@ -17,8 +17,6 @@ import {
 } from '@material-ui/core';
 import getInitials from '../../utils/getInitials';
 
-import EditUserDialog from '../../dialogs/NewUserModal';
-import { Edit } from 'react-feather';
 import { UserContext } from '../../context/UserContext';
 const useStyles = makeStyles((theme) => ({
    root: {},
@@ -35,69 +33,15 @@ const Results = ({
    selectedUserIds,
    setSelectedUserIds,
    users,
-   isEdit,
-   editUser,
    ...rest
 }) => {
    const classes = useStyles();
    // const [selectedUserIds, setSelectedUserIds] = useState([]);
-   const [currentEdituser, setCurrentEdituser] = useState(null);
-
-   const { updateAUser } = useContext(UserContext);
-
-   const [showEditUserDialog, setShowEditUserDialog] = useState(
-      false
-   );
-
-   const toggleEditDialog = () => {
-      setShowEditUserDialog(!showEditUserDialog);
-   };
-
-   const handleSelectAll = (event) => {
-      let newSelectedUserIds;
-
-      if (event.target.checked) {
-         newSelectedUserIds = users.map((user) => user._id);
-      } else {
-         newSelectedUserIds = [];
-      }
-
-      setSelectedUserIds(newSelectedUserIds);
-   };
 
    const handleSelectOne = (event, id) => {
       const selectedIndex = selectedUserIds.indexOf(id);
-      let newSelectedUserIds = [];
 
-      if (selectedIndex === -1) {
-         newSelectedUserIds = newSelectedUserIds.concat(
-            selectedUserIds,
-            id
-         );
-      } else if (selectedIndex === 0) {
-         newSelectedUserIds = newSelectedUserIds.concat(
-            selectedUserIds.slice(1)
-         );
-      } else if (selectedIndex === selectedUserIds.length - 1) {
-         newSelectedUserIds = newSelectedUserIds.concat(
-            selectedUserIds.slice(0, -1)
-         );
-      } else if (selectedIndex > 0) {
-         newSelectedUserIds = newSelectedUserIds.concat(
-            selectedUserIds.slice(0, selectedIndex),
-            selectedUserIds.slice(selectedIndex + 1)
-         );
-      }
-
-      setSelectedUserIds(newSelectedUserIds);
-   };
-
-   const handleEditClick = (user) => {
-      setCurrentEdituser(user);
-
-      setTimeout(() => {
-         toggleEditDialog();
-      }, 500);
+      setSelectedUserIds([id]);
    };
 
    return (
@@ -107,30 +51,10 @@ const Results = ({
                <Table>
                   <TableHead>
                      <TableRow>
-                        <TableCell padding='checkbox'>
-                           {users && users.length > 0 && (
-                              <Checkbox
-                                 checked={
-                                    selectedUserIds &&
-                                    selectedUserIds.length ===
-                                       users.length
-                                 }
-                                 color='primary'
-                                 indeterminate={
-                                    selectedUserIds &&
-                                    selectedUserIds.length > 0 &&
-                                    selectedUserIds.length <
-                                       users.length
-                                 }
-                                 onChange={handleSelectAll}
-                              />
-                           )}
-                        </TableCell>
+                        <TableCell padding='checkbox'></TableCell>
                         <TableCell>Name</TableCell>
                         <TableCell>Email</TableCell>
                         <TableCell>Role</TableCell>
-
-                        {isEdit && <TableCell>Edit</TableCell>}
                      </TableRow>
                   </TableHead>
                   {users && users.length > 0 && (
@@ -177,33 +101,12 @@ const Results = ({
                                        color='textPrimary'
                                        variant='body1'
                                     >
-                                       {user.name}
+                                       {user.username}
                                     </Typography>
                                  </Box>
                               </TableCell>
                               <TableCell>{user.email}</TableCell>
                               <TableCell>{user.role}</TableCell>
-                              {isEdit && (
-                                 <TableCell>
-                                    <Button
-                                       variant='contained'
-                                       style={{
-                                          minWidth: 'unset',
-                                          padding: 5,
-                                          backgroundColor: '#58a3df',
-                                       }}
-                                       onClick={() =>
-                                          handleEditClick(user)
-                                       }
-                                    >
-                                       <Edit
-                                          style={{
-                                             color: '#fff',
-                                          }}
-                                       />
-                                    </Button>
-                                 </TableCell>
-                              )}
                            </TableRow>
                         ))}
                      </TableBody>
@@ -211,19 +114,6 @@ const Results = ({
                </Table>
             </Box>
          </PerfectScrollbar>
-
-         <EditUserDialog
-            isOpen={showEditUserDialog}
-            closeDialog={toggleEditDialog}
-            // createNew={createNewUser}
-            // role={'customer'}
-            isEdit={true}
-            editUser={currentEdituser}
-            updateUser={(updatedUser) => {
-               toggleEditDialog();
-               updateAUser(updatedUser);
-            }}
-         />
       </Card>
    );
 };

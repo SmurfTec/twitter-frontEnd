@@ -7,7 +7,6 @@ import Toolbar from './Toolbar';
 
 import ConfirmDeleteDialog from '../../dialogs/ConfirmDialogBox';
 
-import NewUserDialog from '../../dialogs/NewUserModal';
 import FilterDialog from '../../dialogs/FilterDialog';
 import { UserContext } from '../../context/UserContext';
 
@@ -124,51 +123,6 @@ const Users = () => {
 
       console.log('newUsers filter 1', newUsers);
 
-      switch (criteria) {
-         case 1:
-            newUsers = newUsers.sort((a, b) =>
-               a.createdAt > b.createdAt
-                  ? 1
-                  : b.createdAt > a.createdAt
-                  ? -1
-                  : 0
-            );
-
-            console.log('newUsers', newUsers);
-            break;
-
-         case 2:
-            newUsers = newUsers.sort((a, b) =>
-               a.createdAt > b.createdAt
-                  ? 1
-                  : b.createdAt > a.createdAt
-                  ? -1
-                  : 0
-            );
-
-            newUsers = newUsers.reverse();
-            break;
-
-         case 3:
-            newUsers = newUsers.sort((a, b) =>
-               a.name > b.name ? 1 : b.name > a.name ? -1 : 0
-            );
-
-            break;
-
-         case 4:
-            newUsers = newUsers.sort((a, b) =>
-               a.name > b.name ? 1 : b.name > a.name ? -1 : 0
-            );
-
-            newUsers = newUsers.reverse();
-
-            break;
-
-         default:
-            break;
-      }
-
       setFilteredUsers(newUsers);
    };
 
@@ -189,8 +143,6 @@ const Users = () => {
                   selectedUserIds={selectedUserIds}
                   setSelectedUserIds={setSelectedUserIds}
                   isEdit={true}
-                  editUser={editUser}
-                  updateUser={updateAUser}
                />
             </Box>
             <ConfirmDeleteDialog
@@ -198,14 +150,6 @@ const Users = () => {
                toggleDialog={toggleShowConfirmDelDialog}
                dialogTitle={'Delete these Users ?'}
                success={deleteUsers}
-            />
-            <NewUserDialog
-               isOpen={showNewUserDialog}
-               closeDialog={toggleAddNewuserDialog}
-               createNew={createNewUser}
-               role={'Customer'}
-               isEdit={false}
-               editUser={currentEdituser}
             />
             <FilterDialog
                open={showFilterDialog}

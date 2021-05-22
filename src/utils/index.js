@@ -34,7 +34,11 @@ export const timeSince = (timestamp) => {
    return Math.floor(seconds) + ' seconds';
 };
 
-export const client = (endpoint, { body, ...customConfig } = {}) => {
+export const client = (
+   endpoint,
+   { body, ...customConfig } = {},
+   method = 'GET'
+) => {
    const token = localStorage.getItem('token');
    const headers = { 'Content-Type': 'application/json' };
 
@@ -43,7 +47,7 @@ export const client = (endpoint, { body, ...customConfig } = {}) => {
    }
 
    const config = {
-      method: body ? 'POST' : 'GET',
+      method: method ? method : body ? 'POST' : 'GET',
       ...customConfig,
       headers: {
          ...headers,
