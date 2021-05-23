@@ -19,6 +19,7 @@ function FollowSuggestion({ suggestionUser, icon = true }) {
          `suggestionUser.followers`,
          suggestionUser.followers
       );
+      suggestionUser.followers &&
       suggestionUser.followers.includes(user._id)
          ? setIsFollowing(true)
          : setIsFollowing(false);

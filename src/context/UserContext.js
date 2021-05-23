@@ -23,6 +23,10 @@ export const UserProvider = ({ children }) => {
          supportUsers = [];
          return;
       }
+      console.log(
+         `usersObj.user`,
+         usersObj.users.map((el) => el.role)
+      );
       supportUsers = usersObj.users.filter(
          (el) => el.role === 'support'
       );
@@ -37,18 +41,6 @@ export const UserProvider = ({ children }) => {
          setUsersObj({
             ...usersObj,
             users: res.data,
-         });
-      })();
-   };
-
-   const fetchSupports = () => {
-      (async () => {
-         const res = await client('/support');
-         //  const res = await axios.get(`${API_BASE_URL}/users`);
-         console.log('res', res);
-         setUsersObj({
-            ...usersObj,
-            supports: res.data,
          });
       })();
    };
@@ -97,7 +89,10 @@ export const UserProvider = ({ children }) => {
       console.log(`res`, res);
 
       // * Add newly Created User in Context
-      usersObj.users.unshift(res.user);
+      let newUsers = usersObj.users;
+      newUsers.unshift(res.user);
+
+      setUsersObj({ ...usersObj, users: newUsers });
    };
 
    const logout = () => {
