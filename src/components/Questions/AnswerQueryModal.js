@@ -18,7 +18,13 @@ const Styles = {
 };
 
 const AnswerQueryModal = (props) => {
-   const { isOpen, closeDialog, createNew, classes } = props;
+   const {
+      isOpen,
+      closeDialog,
+      createNew,
+      classes,
+      condition,
+   } = props;
 
    const [answerTxt, setAnswertxt] = useState('');
 
@@ -54,9 +60,7 @@ const AnswerQueryModal = (props) => {
                  progress: undefined,
               })
            )
-         : createNew({
-              answer: answerTxt,
-           });
+         : createNew(answerTxt);
    };
 
    return (
@@ -68,14 +72,14 @@ const AnswerQueryModal = (props) => {
             className={classes.Dialog}
          >
             <DialogTitle id='form-dialog-title'>
-               Answer Question
+               {condition} Question
             </DialogTitle>
             <DialogContent>
                <TextField
                   autoFocus
                   margin='dense'
                   id='name'
-                  label='Name'
+                  label='Question'
                   // type='email'
                   fullWidth
                   value={answerTxt}
@@ -91,7 +95,7 @@ const AnswerQueryModal = (props) => {
                      textTransform: 'capitalize',
                   }}
                >
-                  Create
+                  {condition}
                </Button>
                <Button
                   onClick={closeDialog}

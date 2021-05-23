@@ -22,10 +22,7 @@ import { FeedContext } from './context/FeedContext';
 import { client } from './utils';
 import { UserContext } from './context/UserContext';
 import DashboardLayout from './components/Layout/DashboardLayout/DashboardLayout';
-import Users from './components/Users/Users';
 import User from './pages/Profile/User';
-import Support from './components/Support/Support';
-import Questions from './components/Questions/Questions';
 
 function Router() {
    const { setWhoFollow, setTags } = useContext(FeedContext);
@@ -43,48 +40,35 @@ function Router() {
       });
    }, []);
 
-   let routes;
-   if (user.role === 'admin' || user.role === 'support') {
-      routes = (
-         <Switch>
-            <DashboardLayout component={Users} path='/users' />
-            <DashboardLayout component={Support} path='/support' />
-            <DashboardLayout
-               component={Questions}
-               path='/questions'
-            />
-            <DashboardLayout path='/' />
-         </Switch>
-      );
-   } else {
-      routes = (
+   let routes = (
+      <Switch>
+         <Route path='/dashboard' component={DashboardLayout} />
+
          <Layout>
-            <Switch>
-               <Route exact path='/' component={Home} />
-               <Route exact path='/more' component={More} />
-               <Route exact path='/explore' component={Explore} />
-               <Route exact path='/lists' component={Lists} />
-               <Route
-                  exact
-                  path='/notifications'
-                  component={Notifications}
-               />
-               <Route exact path='/bookmarks' component={Bookmarks} />
-               <Route path='/accounts/edit' component={EditProfile} />
+            <Route exact path='/' component={Home} />
+            <Route exact path='/more' component={More} />
+            <Route exact path='/explore' component={Explore} />
+            <Route exact path='/lists' component={Lists} />
+            <Route
+               exact
+               path='/notifications'
+               component={Notifications}
+            />
+            <Route exact path='/bookmarks' component={Bookmarks} />
+            <Route path='/accounts/edit' component={EditProfile} />
 
-               <Route exact path={`/profile`} component={User} />
+            <Route exact path={`/profile`} component={User} />
 
-               <Route exact path={`/:handle`} component={Profile} />
-               <Route
-                  exact
-                  path={`/:handle/status/:tweetId`}
-                  component={TweetDetail}
-               />
-               <Redirect from='*' to='/' />
-            </Switch>
+            <Route exact path={`/:handle`} component={Profile} />
+            <Route
+               exact
+               path={`/:handle/status/:tweetId`}
+               component={TweetDetail}
+            />
          </Layout>
-      );
-   }
+         <Redirect from='*' to='/' />
+      </Switch>
+   );
 
    return <BrowserRouter>{routes}</BrowserRouter>;
 }

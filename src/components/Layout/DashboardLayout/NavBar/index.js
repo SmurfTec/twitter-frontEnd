@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
@@ -15,27 +15,14 @@ import {
    Users as UsersIcon,
    LogOut,
    Printer,
-   Package,
-   DollarSign,
-   Key,
    HelpCircle,
 } from 'react-feather';
 import NavItem from './NavItem';
 import { UserContext } from '../../../../context/UserContext';
 
-const items = [
+const generalItems = [
    {
-      href: '/users',
-      icon: UsersIcon,
-      title: 'Users',
-   },
-   {
-      href: '/support',
-      icon: Printer,
-      title: 'Support',
-   },
-   {
-      href: '/questions',
+      href: '/dashboard/questions',
       icon: HelpCircle,
       title: 'questions',
    },
@@ -45,16 +32,18 @@ const items = [
       icon: LogOut,
       title: 'Logout',
    },
-   // {
-   //   href: '/register',
-   //   icon: UserPlusIcon,
-   //   title: 'Client App'
-   // }
-   // {
-   //   href: '/404',
-   //   icon: AlertCircleIcon,
-   //   title: 'Error'
-   // }
+];
+const adminItems = [
+   {
+      href: '/dashboard/users',
+      icon: UsersIcon,
+      title: 'Users',
+   },
+   {
+      href: '/dashboard/support',
+      icon: Printer,
+      title: 'Support',
+   },
 ];
 
 const useStyles = makeStyles(() => ({
@@ -76,8 +65,17 @@ const useStyles = makeStyles(() => ({
 const NavBar = ({ onMobileClose, openMobile }) => {
    const classes = useStyles();
    const location = useLocation();
+   const [items, setItems] = useState();
 
    const { user } = useContext(UserContext);
+
+   useEffect(() => {
+      if (!user || user === null) return;
+
+      if (user.role === 'admin' || user.role === 'support')
+         setItems([...adminItems, ...generalItems]);
+      else setItems([...generalItems]);
+   }, [user]);
 
    useEffect(() => {
       if (openMobile && onMobileClose) {
@@ -119,14 +117,16 @@ const NavBar = ({ onMobileClose, openMobile }) => {
          <Divider />
          <Box p={2}>
             <List>
-               {items.map((item) => (
-                  <NavItem
-                     href={item.href}
-                     key={item.title}
-                     title={item.title}
-                     icon={item.icon}
-                  />
-               ))}
+               {items &&
+                  items.length > 0 &&
+                  items.map((item) => (
+                     <NavItem
+                        href={item.href}
+                        key={item.title}
+                        title={item.title}
+                        icon={item.icon}
+                     />
+                  ))}
             </List>
          </Box>
          <Box flexGrow={1} />

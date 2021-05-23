@@ -11,6 +11,7 @@ import ConfirmDeleteDialog from '../../dialogs/ConfirmDialogBox';
 
 import FilterDialog from '../../dialogs/FilterDialog';
 import { QueriesContext } from '../../context/QueriesContext';
+import { UserContext } from '../../context/UserContext';
 
 const useStyles = makeStyles((theme) => ({
    root: {
@@ -24,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 const Questions = () => {
    const classes = useStyles();
    const { queries, deleteMany } = useContext(QueriesContext);
+   const { user } = useContext(UserContext);
 
    console.log('queries', queries);
    const [selectedUserIds, setSelectedUserIds] = useState([]);
@@ -82,19 +84,19 @@ const Questions = () => {
 
          case 1:
             newQueries = queries.filter(
-               (user) => user.role.toLowerCase() === 'customer'
+               (el) => el.role.toLowerCase() === 'customer'
             );
 
             break;
          case 2:
             newQueries = queries.filter(
-               (user) => user.role.toLowerCase() === 'printer'
+               (el) => el.role.toLowerCase() === 'printer'
             );
 
             break;
          case 3:
             newQueries = queries.filter(
-               (user) => user.role.toLowerCase() === 'admin'
+               (el) => el.role.toLowerCase() === 'admin'
             );
 
             break;
@@ -117,6 +119,7 @@ const Questions = () => {
                handleDelete={handleDelete}
                selectedUserIds={selectedUserIds}
                toggleFilter={toggleFilterDialog}
+               user={user}
             />
             <Box mt={3}>
                <QuestionsTable queries={filteredQueries} />

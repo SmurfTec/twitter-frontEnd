@@ -16,6 +16,7 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import AnswerQueryModal from './AnswerQueryModal';
 import { QueriesContext } from '../../context/QueriesContext';
+import { UserContext } from '../../context/UserContext';
 
 const useRowStyles = makeStyles({
    root: {
@@ -32,6 +33,7 @@ const Row = (props) => {
    const [answerIsOPen, setAnswerIsOPen] = useState(false);
    const [currentRow, setCurrentRow] = useState(null);
    const { answerQuery } = useContext(QueriesContext);
+   const { user } = useContext(UserContext);
 
    const getAnswerDialog = (e, el) => {
       setCurrentRow(el);
@@ -63,15 +65,21 @@ const Row = (props) => {
             </TableCell>
             <TableCell align='right'>{row.status}</TableCell>
             <TableCell align='right'>
-               {row.status.toLowerCase() === 'not answered' && (
-                  <Button
-                     variant='contained'
-                     onClick={(e) => getAnswerDialog(e, row)}
-                     style={{ curor: 'pointer' }}
-                  >
-                     Answer
-                  </Button>
-               )}
+               {user.role === 'admin' ||
+                  (user.role === 'support' && (
+                     <>
+                        {row.status.toLowerCase() ===
+                           'not answered' && (
+                           <Button
+                              variant='contained'
+                              onClick={(e) => getAnswerDialog(e, row)}
+                              style={{ curor: 'pointer' }}
+                           >
+                              Answer
+                           </Button>
+                        )}
+                     </>
+                  ))}
             </TableCell>
          </TableRow>
          <TableRow>
@@ -99,6 +107,7 @@ const Row = (props) => {
                toggleAnwerOpen();
                answerQuery(currentRow._id, answer);
             }}
+            condition={'Answer'}
          />
       </React.Fragment>
    );

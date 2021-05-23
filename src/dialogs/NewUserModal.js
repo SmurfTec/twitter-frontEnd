@@ -88,6 +88,7 @@ const AdminNewUserModal = (props) => {
               passwordConfirm: passwordTxt,
               role: 'support',
            });
+      closeDialog();
    };
 
    return (

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
@@ -10,6 +10,7 @@ import {
    InputAdornment,
    SvgIcon,
    makeStyles,
+   IconButton,
 } from '@material-ui/core';
 import {
    Search as SearchIcon,
@@ -18,6 +19,9 @@ import {
    UserPlus as UserAddIcon,
 } from 'react-feather';
 import { genMediaQuery } from '../../utils/mediaStyles';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import AnswerQueryModal from '../Questions/AnswerQueryModal';
+import { QueriesContext } from '../../context/QueriesContext';
 
 const useStyles = makeStyles((theme) => ({
    root: {},
@@ -53,6 +57,17 @@ const Toolbar = ({
    ...rest
 }) => {
    const classes = useStyles();
+   const [questionIsOpen, setQuestionIsOPen] = useState(false);
+   const { addNewQuery } = useContext(QueriesContext);
+
+   const getQuestionDilog = (e, el) => {
+      toggleQuestionOpen();
+   };
+
+   const toggleQuestionOpen = () => {
+      setQuestionIsOPen(!questionIsOpen);
+   };
+
    const [state, setState] = useState({
       searchTxt: '',
    });
@@ -119,6 +134,17 @@ const Toolbar = ({
                         onChange={hanldeTxtChange}
                         name='searchTxt'
                      />
+                     {user && user.role === 'user' && (
+                        <Button
+                           variant='contained'
+                           className={`${classes.deleteBtn} ${classes.ToolbarBtns}`}
+                           onClick={toggleQuestionOpen}
+                           color='primary'
+                        >
+                           Ask New Question
+                           <AddCircleIcon />
+                        </Button>
+                     )}
                      {selectedUserIds && selectedUserIds.length > 0 && (
                         <Button
                            style={{
@@ -137,6 +163,13 @@ const Toolbar = ({
                </CardContent>
             </Card>
          </Box>
+
+         <AnswerQueryModal
+            isOpen={questionIsOpen}
+            closeDialog={toggleQuestionOpen}
+            createNew={addNewQuery}
+            condition={'Ask'}
+         />
       </div>
    );
 };

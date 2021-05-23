@@ -1,5 +1,6 @@
 import React, { useState, createContext, useEffect } from 'react';
 import { client } from '../utils';
+import { toast } from 'react-toastify';
 
 export const QueriesContext = createContext(null);
 
@@ -23,17 +24,19 @@ export const QueryProvider = ({ children }) => {
    };
 
    const addNewQuery = async (question) => {
-      const body = { question };
+      const body = { question: question };
       const res = await client(`/query`, { body }, 'POST');
       console.log(`res`, res);
 
       // * Add Newly created Query in Context
       queries.unshift(res.user);
+
+      toast.success('Question Successfully Asked!');
    };
 
    const answerQuery = async (queryId, answer) => {
       console.log(`answer`, answer);
-      const body = answer;
+      const body = { answer: answer };
 
       const res = await client(
          `/query/${queryId}`,
