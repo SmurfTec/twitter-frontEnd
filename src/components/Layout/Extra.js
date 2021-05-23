@@ -64,10 +64,10 @@ function Extra() {
                   icon={<Options />}
                   src='lists'
                >
-                  {whoFollow?.slice(0, 4).map((user) => (
+                  {whoFollow?.slice(0, 4).map((el) => (
                      <FollowSuggestion
-                        key={user._id}
-                        suggestionUser={user}
+                        key={el._id}
+                        suggestionUser={el}
                      />
                   ))}
 
