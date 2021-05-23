@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Collapse from '@material-ui/core/Collapse';
@@ -15,6 +14,8 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import AnswerQueryModal from './AnswerQueryModal';
+import { QueriesContext } from '../../context/QueriesContext';
 
 const useRowStyles = makeStyles({
    root: {
@@ -24,25 +25,22 @@ const useRowStyles = makeStyles({
    },
 });
 
-function createData(name, calories, fat, carbs, protein, price) {
-   return {
-      name,
-      calories,
-      fat,
-      carbs,
-      protein,
-      price,
-      history: [
-         { date: '2020-01-05', customerId: '11091700', amount: 3 },
-         { date: '2020-01-02', customerId: 'Anonymous', amount: 1 },
-      ],
-   };
-}
-
-function Row(props) {
+const Row = (props) => {
    const { row } = props;
    const [open, setOpen] = React.useState(false);
    const classes = useRowStyles();
+   const [answerIsOPen, setAnswerIsOPen] = useState(false);
+   const [currentRow, setCurrentRow] = useState(null);
+   const { answerQuery } = useContext(QueriesContext);
+
+   const getAnswerDialog = (e, el) => {
+      setCurrentRow(el);
+      toggleAnwerOpen();
+   };
+
+   const toggleAnwerOpen = () => {
+      setAnswerIsOPen(!answerIsOPen);
+   };
 
    return (
       <React.Fragment>
@@ -61,12 +59,20 @@ function Row(props) {
                </IconButton>
             </TableCell>
             <TableCell component='th' scope='row'>
-               {row.name}
+               {row.question}
             </TableCell>
-            <TableCell align='right'>{row.calories}</TableCell>
-            <TableCell align='right'>{row.fat}</TableCell>
-            <TableCell align='right'>{row.carbs}</TableCell>
-            <TableCell align='right'>{row.protein}</TableCell>
+            <TableCell align='right'>{row.status}</TableCell>
+            <TableCell align='right'>
+               {row.status.toLowerCase() === 'not answered' && (
+                  <Button
+                     variant='contained'
+                     onClick={(e) => getAnswerDialog(e, row)}
+                     style={{ curor: 'pointer' }}
+                  >
+                     Answer
+                  </Button>
+               )}
+            </TableCell>
          </TableRow>
          <TableRow>
             <TableCell
@@ -80,47 +86,25 @@ function Row(props) {
                         gutterBottom
                         component='p'
                      >
-                        This is the answer
+                        {row.answer}
                      </Typography>
                   </Box>
                </Collapse>
             </TableCell>
          </TableRow>
+         <AnswerQueryModal
+            isOpen={answerIsOPen}
+            closeDialog={toggleAnwerOpen}
+            createNew={(answer) => {
+               toggleAnwerOpen();
+               answerQuery(currentRow._id, answer);
+            }}
+         />
       </React.Fragment>
    );
-}
-
-Row.propTypes = {
-   row: PropTypes.shape({
-      calories: PropTypes.number.isRequired,
-      carbs: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      history: PropTypes.arrayOf(
-         PropTypes.shape({
-            amount: PropTypes.number.isRequired,
-            customerId: PropTypes.string.isRequired,
-            date: PropTypes.string.isRequired,
-         })
-      ).isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      protein: PropTypes.number.isRequired,
-   }).isRequired,
 };
 
-const AnswerBtn = (
-   <Button variant='contained' style={{ curor: 'pointer' }}>
-      Answer
-   </Button>
-);
-
-const rows = [
-   createData('How to eat an apple ?', 'Answered', AnswerBtn),
-   createData('How to open a door', 'Answered', AnswerBtn),
-   createData('How to get hot', 'NOT Answered', AnswerBtn),
-];
-
-export default function QuestionsTable() {
+export default function QuestionsTable({ queries }) {
    return (
       <TableContainer component={Paper}>
          <Table aria-label='collapsible table'>
@@ -133,7 +117,7 @@ export default function QuestionsTable() {
                </TableRow>
             </TableHead>
             <TableBody>
-               {rows.map((row) => (
+               {queries.map((row) => (
                   <Row key={row.name} row={row} />
                ))}
             </TableBody>

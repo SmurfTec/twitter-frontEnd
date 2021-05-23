@@ -6,103 +6,50 @@ export const QueriesContext = createContext(null);
 export const QueryProvider = ({ children }) => {
    const localSt = JSON.parse(localStorage.getItem('user'));
    const [user, setUser] = useState(localSt ? localSt : null);
-   const [queriesObj, setQueriesObj] = useState({
-      users: [],
-      supportUsers: [],
-   });
+   const [queries, setQueriesObj] = useState([]);
 
    useEffect(() => {
-      fetchUsers();
+      fetchQueries();
       // fetchSupports();
    }, []);
 
-   useEffect(() => {
-      let supportUsers;
-      if (!queriesObj.users || queriesObj.users.length === 0) {
-         supportUsers = [];
-         return;
-      }
-      supportUsers = queriesObj.users.filter(
-         (el) => el.role === 'support'
-      );
-      setQueriesObj({ ...queriesObj, supportUsers: supportUsers });
-   }, [queriesObj.users]);
-
-   const fetchUsers = () => {
+   const fetchQueries = () => {
       (async () => {
-         const res = await client('/users');
+         const res = await client('/query');
          //  const res = await axios.get(`${API_BASE_URL}/users`);
          console.log('res', res);
-         setQueriesObj({
-            ...queriesObj,
-            users: res.data,
-         });
+         setQueriesObj(res.queries);
       })();
    };
 
-   const fetchSupports = () => {
-      (async () => {
-         const res = await client('/support');
-         //  const res = await axios.get(`${API_BASE_URL}/users`);
-         console.log('res', res);
-         setQueriesObj({
-            ...queriesObj,
-            supports: res.data,
-         });
-      })();
+   const addNewQuery = async (question) => {
+      const body = { question };
+      const res = await client(`/query`, { body }, 'POST');
+      console.log(`res`, res);
+
+      // * Add Newly created Query in Context
+      queries.unshift(res.user);
    };
 
-   const deleteMany = async (deleteId) => {
-      const res = await client(`/users/${deleteId}`, {}, 'DELETE');
+   const answerQuery = async (queryId, answer) => {
+      console.log(`answer`, answer);
+      const body = answer;
 
-      console.log('res', res);
-      // * Remove User from Users
-      console.clear();
-      const newUsers = queriesObj.users.filter((user) => {
-         console.log(`user._id`, user._id);
-         console.log(`deleteId`, deleteId);
-         return (
-            JSON.stringify(user._id) !== JSON.stringify(deleteId[0])
-         );
-      });
-      setQueriesObj({
-         ...queriesObj,
-         users: newUsers,
-      });
-   };
-
-   const deleteSupport = async (deleteId) => {
-      const res = await client(`/support/${deleteId}`, {}, 'DELETE');
-
-      console.log('res', res);
-      // * Remove User from Users
-      const newUsers = queriesObj.supports.filter(
-         (user) => user._id !== deleteId
+      const res = await client(
+         `/query/${queryId}`,
+         { body },
+         'PATCH'
       );
-      setQueriesObj({
-         ...queriesObj,
-         supports: newUsers,
-      });
-   };
-
-   const addNewSupport = async (user) => {
-      const res = await client(`/support`, { ...user }, 'POST');
-      console.log(`res`, res);
-   };
-
-   const addNewUser = async (user) => {
-      const body = { ...user };
-      const res = await client(`/users`, { body }, 'POST');
       console.log(`res`, res);
 
-      // * Add newly Created User in Context
-      queriesObj.users.unshift(res.user);
-   };
+      // * Update in Context
+      const newQueries = queries.map((el) =>
+         JSON.stringify(el._id) === JSON.stringify(queryId)
+            ? res.query
+            : el
+      );
 
-   const logout = () => {
-      setUser(null);
-      localStorage.removeItem('user');
-      localStorage.removeItem('token');
+      setQueriesObj(newQueries);
    };
 
    return (
@@ -110,12 +57,9 @@ export const QueryProvider = ({ children }) => {
          value={{
             user,
             setUser,
-            logout,
-            deleteMany,
-            queriesObj,
-            deleteSupport,
-            addNewSupport,
-            addNewUser,
+            queries,
+            addNewQuery,
+            answerQuery,
          }}
       >
          {children}

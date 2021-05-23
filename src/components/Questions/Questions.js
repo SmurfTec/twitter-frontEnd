@@ -23,11 +23,11 @@ const useStyles = makeStyles((theme) => ({
 
 const Questions = () => {
    const classes = useStyles();
-   const { queriesObj, deleteMany } = useContext(QueriesContext);
+   const { queries, deleteMany } = useContext(QueriesContext);
 
-   console.log('queriesObj', queriesObj);
+   console.log('queries', queries);
    const [selectedUserIds, setSelectedUserIds] = useState([]);
-   const [filteredUsers, setFilteredUsers] = useState([]);
+   const [filteredQueries, setFilteredQueries] = useState([]);
    const [
       showConfirmDeleteDialog,
       setShowConfirmDeleteDialog,
@@ -57,58 +57,58 @@ const Questions = () => {
    };
 
    useEffect(() => {
-      setFilteredUsers(queriesObj.users);
-   }, [queriesObj.users]);
+      setFilteredQueries(queries);
+   }, [queries]);
 
    const searchResults = (searchTxt) => {
       console.log('searchTxt', searchTxt);
-      const newUsers = queriesObj.users.filter((user) =>
-         user.name.toLowerCase().includes(searchTxt.toLowerCase())
+      const newQuerie = queries.filter((el) =>
+         el.question.toLowerCase().includes(searchTxt.toLowerCase())
       );
 
-      console.log('newUsers', newUsers);
-      setFilteredUsers(newUsers);
+      console.log('newQuerie', newQuerie);
+      setFilteredQueries(newQuerie);
    };
 
    const filterUsers = (criteria, filterRoleBy) => {
       toggleFilterDialog();
-      let newUsers;
+      let newQueries;
       console.log('filterRoleBy', filterRoleBy);
       switch (filterRoleBy) {
          case 0:
-            newUsers = queriesObj.users;
+            newQueries = queries;
 
             break;
 
          case 1:
-            newUsers = queriesObj.users.filter(
+            newQueries = queries.filter(
                (user) => user.role.toLowerCase() === 'customer'
             );
 
             break;
          case 2:
-            newUsers = queriesObj.users.filter(
+            newQueries = queries.filter(
                (user) => user.role.toLowerCase() === 'printer'
             );
 
             break;
          case 3:
-            newUsers = queriesObj.users.filter(
+            newQueries = queries.filter(
                (user) => user.role.toLowerCase() === 'admin'
             );
 
             break;
 
          default:
-            newUsers = queriesObj.users;
+            newQueries = queries;
       }
 
-      console.log('newUsers filter 1', newUsers);
+      console.log('newQueries filter 1', newQueries);
 
-      setFilteredUsers(newUsers);
+      setFilteredQueries(newQueries);
    };
 
-   console.log('filteredUsers', filteredUsers);
+   console.log('filteredQueries', filteredQueries);
    return (
       <Page className={classes.root} title='Users'>
          <Container maxWidth='lg'>
@@ -119,12 +119,7 @@ const Questions = () => {
                toggleFilter={toggleFilterDialog}
             />
             <Box mt={3}>
-               <QuestionsTable
-                  users={filteredUsers}
-                  selectedUserIds={selectedUserIds}
-                  setSelectedUserIds={setSelectedUserIds}
-                  isEdit={true}
-               />
+               <QuestionsTable queries={filteredQueries} />
             </Box>
             <ConfirmDeleteDialog
                open={showConfirmDeleteDialog}
