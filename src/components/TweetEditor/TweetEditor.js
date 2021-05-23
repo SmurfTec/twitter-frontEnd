@@ -62,7 +62,7 @@ function TweetEditor() {
          user: user,
       };
 
-      client(`/posts`, { body: newPost }).then((res) => {
+      client(`/posts`, { body: newPost }, 'POST').then((res) => {
          const post = res.data;
          console.log(`post`, post);
          post.isLiked = false;

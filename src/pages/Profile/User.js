@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import Header from '../../components/Header/Header';
@@ -12,11 +12,11 @@ import Button from '../../components/Button/Button';
 import Avatar from '../../components/Avatar/Avatar';
 import ThemeButton from '../../components/ThemeButton/ThemeButton';
 
-import { client } from '../../utils';
-
 import './Profile.css';
+import { UserContext } from '../../context/UserContext';
 
-function Profile() {
+const User = () => {
+   const { user } = useContext(UserContext);
    const { handle } = useParams();
    const [profile, setProfile] = useState({});
    const [loading, setLoading] = useState(true);
@@ -27,15 +27,15 @@ function Profile() {
    const decFollowers = () => setFollowers(followersState - 1);
 
    useEffect(() => {
-      window.scrollTo(0, 0);
-      client(`/users/${handle}`)
-         .then((res) => {
-            setLoading(false);
-            setDeadend(false);
-            setProfile(res.data);
-         })
-         .catch((err) => setDeadend(true));
-   }, [handle]);
+      if (!user || user == null) {
+         deadend = true;
+         return;
+      }
+
+      setLoading(false);
+      setDeadend(false);
+      setProfile(user);
+   }, [user]);
 
    if (!deadend && loading) {
       return (
@@ -79,12 +79,11 @@ function Profile() {
             <div>
                <Avatar size='xlarge' border src={profile.avatar} />
 
-               <Follow
-                  isFollowing={profile?.isFollowing}
-                  incFollowers={incFollowers}
-                  decFollowers={decFollowers}
-                  userId={profile?._id}
-               />
+               <div>
+                  <ThemeButton primary href='/accounts/edit'>
+                     Edit Profile
+                  </ThemeButton>
+               </div>
             </div>
 
             <div className='profile-page__detail'>
@@ -120,6 +119,6 @@ function Profile() {
             ))}
       </div>
    );
-}
+};
 
-export default Profile;
+export default User;

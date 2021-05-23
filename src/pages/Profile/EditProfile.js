@@ -1,66 +1,108 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useHistory } from 'react-router-dom';
 
-import { UserContext } from '../../context/UserContext'
+import { UserContext } from '../../context/UserContext';
 
-import Header from '../../components/Header/Header'
-import TextTitle from '../../components/Text/title'
-import SearchBox from '../../components/SearchBox/SearchBox'
-import ThemeButton from '../../components/ThemeButton/ThemeButton'
-import { client } from '../../utils'
+import Header from '../../components/Header/Header';
+import TextTitle from '../../components/Text/title';
+import SearchBox from '../../components/SearchBox/SearchBox';
+import ThemeButton from '../../components/ThemeButton/ThemeButton';
+import { client } from '../../utils';
 
-import './EditProfile.css'
+import './EditProfile.css';
 
 function EditProfile() {
-  const history = useHistory()
-  const { user, setUser } = useContext(UserContext);
+   const history = useHistory();
+   const { user, setUser } = useContext(UserContext);
 
-  const [fullname, setFullname] = useState(user.fullname)
-  const [bio, setBio] = useState(user.bio)
+   const [state, setState] = useState({
+      email: user.email || '',
+      username: user.username || '',
+      bio: user.bio || '',
+      website: user.website || '',
+   });
 
-  const handleEdit = (e) => {
-    e.preventDefault();
-    if (!fullname) {
-      return toast.error("The name field should not be empty");
-    }
+   const handleEdit = (e) => {
+      e.preventDefault();
+      if (!state.username) {
+         return toast.error('The name field should not be empty');
+      }
 
-    if (!bio) {
-      return toast.error("The username field should not be empty");
-    }
+      if (!state.bio) {
+         return toast.error('The username field should not be empty');
+      }
 
-    const body = {
-      fullname: fullname,
-      bio: bio,
-    };
+      const body = {
+         email: state.email || '',
+         username: state.username || '',
+         bio: state.bio || '',
+         website: state.website || '',
+      };
 
-    client("/users", { method: "PUT", body })
-      .then((res) => {
-        setUser(res.data);
-        localStorage.setItem("user", JSON.stringify(res.data));
-        history.push(`/${user.username}`)
-      })
-      .catch((err) => toast.error(err.message));
-  };
+      client('/users/me', { method: 'PATCH', body }, 'PATCH')
+         .then((data) => {
+            console.clear();
+            console.log(`data`, data);
+            setUser(data.user);
+            localStorage.setItem('user', JSON.stringify(data.user));
+            // history.push(`/${user.username}`);
+            toast.success(`Profile Updated Successfully !`);
+         })
+         .catch((err) => toast.error(err.message));
+   };
 
-  return (
-    <div>
-      <Header border>
-        <TextTitle xbold>Profile Edit</TextTitle>
-      </Header>
+   const handleTextChange = (e) => {
+      setState({
+         ...state,
+         [e.target.name]: e.target.value,
+      });
+   };
 
-      <div className="edit-profile__container">
+   return (
+      <div>
+         <Header border>
+            <TextTitle xbold>Profile Edit</TextTitle>
+         </Header>
 
-        <SearchBox value={fullname} onChange={(e) => setFullname(e.target.value)} icon={false} text="Full Name" />
+         <div className='edit-profile__container'>
+            <SearchBox
+               value={state.username}
+               onChange={handleTextChange}
+               icon={false}
+               name={'username'}
+               text='Username'
+            />
+            <SearchBox
+               value={state.email}
+               onChange={handleTextChange}
+               icon={false}
+               name={'email'}
+               text='Email'
+            />
 
-        <SearchBox value={bio} onChange={(e) => setBio(e.target.value)} icon={false} text="Biyografi" />
+            <SearchBox
+               value={state.bio}
+               onChange={handleTextChange}
+               icon={false}
+               name={'bio'}
+               text='bio'
+            />
 
+            <SearchBox
+               value={state.website}
+               onChange={handleTextChange}
+               icon={false}
+               name={'website'}
+               text='Website'
+            />
 
-        <ThemeButton primary onClick={handleEdit}>Güncelle</ThemeButton>
+            <ThemeButton primary onClick={handleEdit}>
+               Update Profile
+            </ThemeButton>
+         </div>
       </div>
-
-    </div>
-  )
+   );
 }
 
-export default EditProfile
+export default EditProfile;

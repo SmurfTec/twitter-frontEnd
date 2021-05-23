@@ -23,6 +23,7 @@ import { client } from './utils';
 import { UserContext } from './context/UserContext';
 import DashboardLayout from './components/Layout/DashboardLayout/DashboardLayout';
 import Users from './components/Users/Users';
+import User from './pages/Profile/User';
 import Support from './components/Support/Support';
 import Questions from './components/Questions/Questions';
 
@@ -70,6 +71,8 @@ function Router() {
                />
                <Route exact path='/bookmarks' component={Bookmarks} />
                <Route path='/accounts/edit' component={EditProfile} />
+
+               <Route exact path={`/profile`} component={User} />
 
                <Route exact path={`/:handle`} component={Profile} />
                <Route
