@@ -46,7 +46,7 @@ export const MENU = () => {
          path: '/dashboard',
          icon: <Icon.More />,
          iconSelected: <Icon.More />,
-         title: 'More',
+         title: 'Dashboard',
          notify: 0,
       },
    ];

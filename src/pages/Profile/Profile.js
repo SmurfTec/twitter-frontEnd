@@ -68,8 +68,8 @@ function Profile() {
                   <TextTitle xbold>{profile.username}</TextTitle>
                   <TextBody gray>
                      {profile?.posts?.length
-                        ? `${profile.posts.length} Tweets`
-                        : 'No Tweets'}
+                        ? `${profile.posts.length} Posts`
+                        : 'No Posts'}
                   </TextBody>
                </div>
             </div>
