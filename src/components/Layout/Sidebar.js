@@ -20,7 +20,7 @@ function Sidebar({ flat }) {
 
          <div className='sidebar__tweet'>
             <ThemeButton href='/' primary size='large' full={!flat}>
-               {flat ? <Tweet /> : 'Tweet'}
+               {flat ? <Tweet /> : 'Post'}
             </ThemeButton>
          </div>
 
