@@ -3,6 +3,10 @@ import * as Icon from '../components/icons';
 
 import { UserContext } from '../context/UserContext';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
+import HomeIcon from '@material-ui/icons/Home';
+import ListAltIcon from '@material-ui/icons/ListAlt';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import DashboardIcon from '@material-ui/icons/Dashboard';
 
 export const MENU = () => {
    const { user } = useContext(UserContext);
@@ -19,8 +23,8 @@ export const MENU = () => {
       {
          key: 'home',
          path: '/',
-         icon: <Icon.Home />,
-         iconSelected: <Icon.HomeFill />,
+         icon: <HomeIcon />,
+         iconSelected: <HomeIcon />,
          title: 'Home',
          notify: 0,
       },
@@ -28,24 +32,24 @@ export const MENU = () => {
       {
          key: 'lists',
          path: '/lists',
-         icon: <Icon.Lists />,
-         iconSelected: <Icon.ListsFill />,
+         icon: <ListAltIcon />,
+         iconSelected: <ListAltIcon />,
          title: 'Lists',
          notify: 0,
       },
       {
          key: 'profile',
          path: `/profile`,
-         icon: <Icon.Profile />,
-         iconSelected: <Icon.ProfileFill />,
+         icon: <AccountBoxIcon />,
+         iconSelected: <AccountBoxIcon />,
          title: 'Profile',
          notify: 0,
       },
       {
          key: 'more',
          path: '/dashboard',
-         icon: <Icon.More />,
-         iconSelected: <Icon.More />,
+         icon: <DashboardIcon />,
+         iconSelected: <DashboardIcon />,
          title: 'Dashboard',
          notify: 0,
       },
