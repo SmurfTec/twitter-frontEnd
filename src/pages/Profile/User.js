@@ -28,7 +28,7 @@ const User = () => {
 
    useEffect(() => {
       if (!user || user == null) {
-         deadend = true;
+         setDeadend(true);
          return;
       }
 

@@ -35,7 +35,7 @@ function Lists() {
             {!whoFollow && <Loading />}
             {whoFollow &&
                whoFollow?.length === 0 &&
-               'Takip edecek başka biri kalmadı .'}
+               'There is no one else left to follow.'}
          </div>
       </>
    );

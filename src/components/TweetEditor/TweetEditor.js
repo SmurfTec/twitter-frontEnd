@@ -117,25 +117,7 @@ function TweetEditor() {
                         <Media />
                      </Button>
                   </label>
-                  <input
-                     id='file-input'
-                     accept='image/*'
-                     type='file'
-                     onChange={handleUploadImage}
-                  />
 
-                  <label
-                     htmlFor='file-input'
-                     style={{ cursor: 'pointer' }}
-                  >
-                     <Button icon style={{ pointerEvents: 'none' }}>
-                        <Gif />
-                     </Button>
-                  </label>
-
-                  <Button icon>
-                     <Question />
-                  </Button>
                   <div style={{ position: 'relative' }}>
                      <Button
                         icon

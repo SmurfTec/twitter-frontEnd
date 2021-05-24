@@ -5,8 +5,15 @@ import { client } from '../utils';
 export const UserContext = createContext(null);
 
 export const UserProvider = ({ children }) => {
-   const localSt = JSON.parse(localStorage.getItem('user'));
-   const [user, setUser] = useState(localSt ? localSt : null);
+   //  const localSt = JSON.parse(localStorage.getItem('user'));
+   let tokenLocal;
+   try {
+      tokenLocal = localStorage.getItem('jwt');
+   } catch (err) {
+      tokenLocal = null;
+   }
+   const [user, setUser] = useState(null);
+   const [token, setToken] = useState(tokenLocal);
    const [usersObj, setUsersObj] = useState({
       users: [],
       supportUsers: [],
@@ -14,8 +21,16 @@ export const UserProvider = ({ children }) => {
 
    useEffect(() => {
       fetchUsers();
+      getMe();
       // fetchSupports();
    }, []);
+
+   const getMe = async () => {
+      const res = await client(`/users/me`, {}, 'GET');
+      console.log(`res`, res);
+
+      setUser(res.user);
+   };
 
    useEffect(() => {
       let supportUsers;
@@ -112,6 +127,8 @@ export const UserProvider = ({ children }) => {
             deleteSupport,
             addNewSupport,
             addNewUser,
+            token,
+            setToken,
          }}
       >
          {children}

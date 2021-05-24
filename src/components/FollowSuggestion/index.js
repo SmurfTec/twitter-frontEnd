@@ -20,7 +20,7 @@ function FollowSuggestion({ suggestionUser, icon = true }) {
          suggestionUser.followers
       );
       suggestionUser.followers &&
-      suggestionUser.followers.includes(user._id)
+      suggestionUser.followers.includes(user && user._id)
          ? setIsFollowing(true)
          : setIsFollowing(false);
    }, [user, suggestionUser]);

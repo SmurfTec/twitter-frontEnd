@@ -13,9 +13,11 @@ import { client } from '../../utils';
 import './Home.css';
 import Button from '../../components/Button/Button';
 import TextTitle from '../../components/Text/title';
+import { UserContext } from '../../context/UserContext';
 
-function Home() {
+const Home = () => {
    const { feed, setFeed } = useContext(FeedContext);
+   const { user } = useContext(UserContext);
    const [loading, setLoading] = useState(true);
 
    useEffect(() => {
@@ -24,16 +26,11 @@ function Home() {
       setLoading(true);
       setFeed(null);
 
-      client('/posts')
-         .then((res) => {
-            setFeed(res.data);
-            setLoading(false);
-         })
-         .catch((res) => {
-            toast.error(res);
-            setLoading(false);
-         });
-   }, []);
+      if (!user || user === null) return;
+
+      setFeed(user.posts);
+      setLoading(false);
+   }, [user]);
 
    return (
       <div className=''>
@@ -65,6 +62,6 @@ function Home() {
          )}
       </div>
    );
-}
+};
 
 export default Home;

@@ -11,7 +11,7 @@ import { UserContext } from '../../context/UserContext';
 import { client } from '../../utils';
 
 function Login({ setAuth }) {
-   const { setUser } = useContext(UserContext);
+   const { setUser, setToken } = useContext(UserContext);
 
    const [username, setUsername] = useState('');
    const [password, setPassword] = useState('');
@@ -33,9 +33,10 @@ function Login({ setAuth }) {
 
          const { token, user } = data;
 
-         localStorage.setItem('token', token);
+         localStorage.setItem('jwt', token);
          localStorage.setItem('user', JSON.stringify(user));
          setUser(user.data);
+         setToken(token);
          window.location.reload();
       } catch (err) {
          return toast.error(err.message);

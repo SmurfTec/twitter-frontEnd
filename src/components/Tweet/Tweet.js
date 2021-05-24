@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, Link, NavLink } from 'react-router-dom';
 
 import { client, timeSince } from '../../utils';
@@ -9,6 +9,7 @@ import TextBody from '../Text/body';
 import { Reply, Retweet, Like, Share, LikeFill } from '../icons';
 
 import './Tweet.css';
+import { UserContext } from '../../context/UserContext';
 
 function Tweet({ post }) {
    const {
@@ -18,20 +19,35 @@ function Tweet({ post }) {
       comments,
       retweetCount,
       likesCount,
-      user,
       createdAt,
       caption,
       tags,
       files,
    } = post;
    const history = useHistory();
-   const [likedState, setLiked] = useState(isLiked);
+   const [likedState, setLiked] = useState(false);
    const [likesState, setLikes] = useState(likesCount);
+
+   const { user } = useContext(UserContext);
 
    const [retweeted, setRetweeted] = useState(isRetweeted);
    const [retweets, setRetweets] = useState(retweetCount);
 
    const handle = user?.username;
+
+   useEffect(() => {
+      console.clear();
+      console.log(`user`, user);
+      console.log(`post.likes`, post.likes);
+      if (!post.likes || post.likes.length === 0) {
+         setLikes(0);
+         setLiked(false);
+         return;
+      } else if (post.likes.includes(user._id)) {
+         setLiked(true);
+      } else setLiked(false);
+      setLikes(post.likes.length);
+   }, [post]);
 
    const handleToggleLike = () => {
       if (likedState) {
