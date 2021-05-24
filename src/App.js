@@ -15,7 +15,7 @@ function App() {
    return (
       <>
          <ToastContainer autoClose={2000} closeButton={false} />
-         {token ? <Router /> : <Auth />}
+         {token && token !== null ? <Router /> : <Auth />}
       </>
    );
 }

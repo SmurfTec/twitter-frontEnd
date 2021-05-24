@@ -36,9 +36,6 @@ const Home = () => {
       <div className=''>
          <Header border>
             <TextTitle xbold>Home</TextTitle>
-            <Button icon>
-               <Icons.TimelineProp />
-            </Button>
          </Header>
 
          <TweetEditor />

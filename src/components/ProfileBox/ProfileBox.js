@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import './ProfileBox.css';
 import { ArrowBottom } from '../icons';
 import Button from '../Button/Button';
 import TextBody from '../Text/body';
 import Avatar from '../Avatar/Avatar';
+import { UserContext } from '../../context/UserContext';
 
-function ProfileBox({ flat = false, user }) {
+const ProfileBox = ({ flat = false }) => {
+   const { user } = useContext(UserContext);
    return (
       <Button className='profil-box'>
          <Avatar />
@@ -30,6 +32,6 @@ function ProfileBox({ flat = false, user }) {
          )}
       </Button>
    );
-}
+};
 
 export default ProfileBox;

@@ -39,7 +39,7 @@ export const client = (
    { body, ...customConfig } = {},
    method = 'GET'
 ) => {
-   const token = localStorage.getItem('token');
+   const token = localStorage.getItem('jwt');
    const headers = { 'Content-Type': 'application/json' };
 
    if (token) {
@@ -65,7 +65,6 @@ export const client = (
       config.body = JSON.stringify(body);
    }
 
-   console.clear();
    console.log(`body`, body);
    return fetch(`${API_BASE_URL}${endpoint}`, config).then(
       async (res) => {

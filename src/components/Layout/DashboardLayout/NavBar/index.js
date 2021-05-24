@@ -86,50 +86,55 @@ const NavBar = ({ onMobileClose, openMobile }) => {
 
    const content = (
       <Box height='100%' display='flex' flexDirection='column'>
-         <Box
-            alignItems='center'
-            display='flex'
-            flexDirection='column'
-            p={2}
-         >
-            <Avatar
-               className={user.image}
-               // component={RouterLink}
-               src={user.avatar}
-               // to="/"
-               style={{
-                  minHeight: 60,
-                  minWidth: 60,
-                  marginBottom: 20,
-               }}
-            />
-            <Typography
-               className={classes.name}
-               color='textPrimary'
-               variant='h5'
-            >
-               {user.name}
-            </Typography>
-            <Typography color='textSecondary' variant='body2'>
-               Admin
-            </Typography>
-         </Box>
-         <Divider />
-         <Box p={2}>
-            <List>
-               {items &&
-                  items.length > 0 &&
-                  items.map((item) => (
-                     <NavItem
-                        href={item.href}
-                        key={item.title}
-                        title={item.title}
-                        icon={item.icon}
-                     />
-                  ))}
-            </List>
-         </Box>
-         <Box flexGrow={1} />
+         {user && (
+            <>
+               {' '}
+               <Box
+                  alignItems='center'
+                  display='flex'
+                  flexDirection='column'
+                  p={2}
+               >
+                  <Avatar
+                     className={user.image}
+                     // component={RouterLink}
+                     src={user.avatar}
+                     // to="/"
+                     style={{
+                        minHeight: 60,
+                        minWidth: 60,
+                        marginBottom: 20,
+                     }}
+                  />
+                  <Typography
+                     className={classes.name}
+                     color='textPrimary'
+                     variant='h5'
+                  >
+                     {user.name}
+                  </Typography>
+                  <Typography color='textSecondary' variant='body2'>
+                     Admin
+                  </Typography>
+               </Box>
+               <Divider />
+               <Box p={2}>
+                  <List>
+                     {items &&
+                        items.length > 0 &&
+                        items.map((item) => (
+                           <NavItem
+                              href={item.href}
+                              key={item.title}
+                              title={item.title}
+                              icon={item.icon}
+                           />
+                        ))}
+                  </List>
+               </Box>
+               <Box flexGrow={1} />
+            </>
+         )}
       </Box>
    );
 

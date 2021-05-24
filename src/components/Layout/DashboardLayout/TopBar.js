@@ -54,7 +54,7 @@ const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
                      color: '#fff',
                   }}
                >
-                  <h3>Twitter Admin Dashboard</h3>
+                  <h3>Admin Dashboard</h3>
                </RouterLink>
                <Box flexGrow={1} />
                <Hidden mdDown>

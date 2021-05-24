@@ -15,6 +15,8 @@ function FollowSuggestion({ suggestionUser, icon = true }) {
    const [isFollowing, setIsFollowing] = useState(false);
 
    useEffect(() => {
+      if (!suggestionUser || suggestionUser == null) return;
+      if (!user || user == null) return;
       console.log(
          `suggestionUser.followers`,
          suggestionUser.followers
@@ -26,34 +28,40 @@ function FollowSuggestion({ suggestionUser, icon = true }) {
    }, [user, suggestionUser]);
    return (
       <div className='extra__FollowSuggestion'>
-         <div>
-            <Avatar
-               size='medium'
-               src={
-                  suggestionUser.avatar ||
-                  `https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${suggestionUser.name}`
-               }
-               onClick={() =>
-                  history.push(`/${suggestionUser.username}`)
-               }
-            />
+         {suggestionUser && (
+            <>
+               <div>
+                  <Avatar
+                     size='medium'
+                     src={
+                        suggestionUser.avatar ||
+                        `https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${suggestionUser.name}`
+                     }
+                     onClick={() =>
+                        history.push(`/${suggestionUser._id}`)
+                     }
+                  />
 
-            <div className='extra__FollowSuggestion--info'>
-               <Link to={`${suggestionUser.username}`}>
-                  <TextBody bold>{suggestionUser.username}</TextBody>
-               </Link>
+                  <div className='extra__FollowSuggestion--info'>
+                     <Link to={`${suggestionUser._id}`}>
+                        <TextBody bold>
+                           {suggestionUser.username}
+                        </TextBody>
+                     </Link>
 
-               <TextBody>{suggestionUser.email}</TextBody>
-            </div>
-         </div>
-         {icon && (
-            <Follow
-               isFollowing={isFollowing}
-               userId={suggestionUser._id}
-               username={suggestionUser.username}
-            >
-               Follow
-            </Follow>
+                     <TextBody>{suggestionUser.email}</TextBody>
+                  </div>
+               </div>
+               {icon && (
+                  <Follow
+                     isFollowing={isFollowing}
+                     userId={suggestionUser._id}
+                     username={suggestionUser.username}
+                  >
+                     Follow
+                  </Follow>
+               )}
+            </>
          )}
       </div>
    );

@@ -1,18 +1,19 @@
 import React, { useState, createContext, useEffect } from 'react';
 import { Users } from 'react-feather';
+import { toast } from 'react-toastify';
 import { client } from '../utils';
 
 export const UserContext = createContext(null);
 
 export const UserProvider = ({ children }) => {
-   //  const localSt = JSON.parse(localStorage.getItem('user'));
+   const localSt = JSON.parse(localStorage.getItem('user'));
    let tokenLocal;
    try {
       tokenLocal = localStorage.getItem('jwt');
    } catch (err) {
       tokenLocal = null;
    }
-   const [user, setUser] = useState(null);
+   const [user, setUser] = useState(localSt ? localSt : null);
    const [token, setToken] = useState(tokenLocal);
    const [usersObj, setUsersObj] = useState({
       users: [],
@@ -26,10 +27,20 @@ export const UserProvider = ({ children }) => {
    }, []);
 
    const getMe = async () => {
-      const res = await client(`/users/me`, {}, 'GET');
-      console.log(`res`, res);
+      try {
+         const res = await client(`/users/me`, {}, 'GET');
+         console.log(`res`, res);
 
-      setUser(res.user);
+         localStorage.setItem('user', JSON.stringify(res.user));
+
+         setUser(res.user);
+      } catch (err) {
+         setToken(null);
+         localStorage.removeItem('jwt');
+         localStorage.removeItem('user');
+
+         toast.error('You Must Login First !!!');
+      }
    };
 
    useEffect(() => {
@@ -112,8 +123,9 @@ export const UserProvider = ({ children }) => {
 
    const logout = () => {
       setUser(null);
+      setToken(null);
       localStorage.removeItem('user');
-      localStorage.removeItem('token');
+      localStorage.removeItem('jwt');
    };
 
    return (

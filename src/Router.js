@@ -11,9 +11,7 @@ import Profile from './pages/Profile/Profile';
 import Layout from './components/Layout';
 
 import Home from './pages/Home/Home';
-import More from './pages/More/More';
 import EditProfile from './pages/Profile/EditProfile';
-import Explore from './pages/Explore/Explore';
 import Notifications from './pages/Notifications/Notifications';
 import Bookmarks from './pages/Bookmarks/Bookmarks';
 import TweetDetail from './pages/TweetDetail/TweetDetail';
@@ -46,8 +44,6 @@ function Router() {
 
          <Layout>
             <Route exact path='/' component={Home} />
-            <Route exact path='/more' component={More} />
-            <Route exact path='/explore' component={Explore} />
             <Route exact path='/lists' component={Lists} />
             <Route
                exact

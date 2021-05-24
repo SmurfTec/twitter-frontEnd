@@ -109,15 +109,6 @@ function TweetEditor() {
             />
             <div className='tweet-editor__body--secondary'>
                <div className='tweet-editor__body--icons'>
-                  <label
-                     htmlFor='file-input'
-                     style={{ cursor: 'pointer' }}
-                  >
-                     <Button icon style={{ pointerEvents: 'none' }}>
-                        <Media />
-                     </Button>
-                  </label>
-
                   <div style={{ position: 'relative' }}>
                      <Button
                         icon
@@ -138,7 +129,7 @@ function TweetEditor() {
                   </div>
                </div>
                <ThemeButton primary onClick={handleSubmitPost}>
-                  Tweet
+                  Post
                </ThemeButton>
             </div>
          </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import Header from '../../components/Header/Header';
@@ -15,24 +15,36 @@ import ThemeButton from '../../components/ThemeButton/ThemeButton';
 import { client } from '../../utils';
 
 import './Profile.css';
+import { UserContext } from '../../context/UserContext';
 
 function Profile() {
+   const { user } = useContext(UserContext);
    const { handle } = useParams();
    const [profile, setProfile] = useState({});
    const [loading, setLoading] = useState(true);
    const [deadend, setDeadend] = useState(false);
+   const [isFollowing, setIsFollowing] = useState(false);
 
    const [followersState, setFollowers] = useState(0);
    const incFollowers = () => setFollowers(followersState + 1);
    const decFollowers = () => setFollowers(followersState - 1);
 
    useEffect(() => {
+      console.log(`profile.followers`, profile.followers);
+      profile.followers &&
+      profile.followers.includes(user && user._id)
+         ? setIsFollowing(true)
+         : setIsFollowing(false);
+   }, [user, profile]);
+
+   useEffect(() => {
       window.scrollTo(0, 0);
       client(`/users/${handle}`)
          .then((res) => {
+            console.log('res', res);
             setLoading(false);
             setDeadend(false);
-            setProfile(res.data);
+            setProfile(res.user);
          })
          .catch((err) => setDeadend(true));
    }, [handle]);
@@ -45,9 +57,6 @@ function Profile() {
       );
    }
 
-   if (deadend) {
-      return <div>Sorry, this page isn't available</div>;
-   }
    return (
       <div className='profile-page'>
          <Header border>
@@ -56,9 +65,7 @@ function Profile() {
                   <Icons.Options />
                </Button>
                <div style={{ marginLeft: '15px' }}>
-                  <TextTitle xbold>
-                     {profile.fullname ?? profile.username}
-                  </TextTitle>
+                  <TextTitle xbold>{profile.username}</TextTitle>
                   <TextBody gray>
                      {profile?.posts?.length
                         ? `${profile.posts.length} Tweets`
@@ -80,7 +87,7 @@ function Profile() {
                <Avatar size='xlarge' border src={profile.avatar} />
 
                <Follow
-                  isFollowing={profile?.isFollowing}
+                  isFollowing={isFollowing}
                   incFollowers={incFollowers}
                   decFollowers={decFollowers}
                   userId={profile?._id}

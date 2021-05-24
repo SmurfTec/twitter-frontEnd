@@ -43,7 +43,7 @@ function Tweet({ post }) {
          setLikes(0);
          setLiked(false);
          return;
-      } else if (post.likes.includes(user._id)) {
+      } else if (post.likes.includes(user && user._id)) {
          setLiked(true);
       } else setLiked(false);
       setLikes(post.likes.length);
@@ -87,16 +87,14 @@ function Tweet({ post }) {
                <Avatar
                   className=''
                   size='medium'
-                  onClick={() => history.push(`/${user.username}`)}
+                  onClick={() => history.push(`/${user._id}`)}
                />
             </div>
             <div className='page-tweet__body'>
                <div className='tweet-info-user'>
                   <TextBody
                      bold
-                     onClick={() =>
-                        history.push(`/${user?.username}`)
-                     }
+                     onClick={() => history.push(`/${user?._id}`)}
                   >
                      {user?.username}
                   </TextBody>

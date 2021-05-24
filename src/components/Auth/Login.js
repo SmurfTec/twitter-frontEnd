@@ -4,7 +4,9 @@ import { toast } from 'react-toastify';
 import ThemeButton from '../ThemeButton/ThemeButton';
 import TextBody from '../Text/body';
 import TextTitle from '../Text/title';
-import { Twitter } from '../icons';
+// import { Twitter } from '../icons';
+import Twitter from '@material-ui/icons/LibraryBooks';
+
 import Button from '../Button/Button';
 
 import { UserContext } from '../../context/UserContext';
@@ -60,7 +62,7 @@ function Login({ setAuth }) {
                title
                style={{ fontSize: '23px', marginBottom: '5px' }}
             >
-               Twitter Login
+               Login
             </TextTitle>
 
             <div className='form-control'>

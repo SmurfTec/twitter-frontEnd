@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
    useHistory,
    useLocation as locations,
@@ -8,7 +8,6 @@ import './Extra.css';
 
 import List from '../List';
 import FollowSuggestion from '../FollowSuggestion';
-import News from '../News';
 import Loading from '../loading';
 
 import { Options } from '../icons';
@@ -44,20 +43,6 @@ function Extra() {
          />
 
          <div className='layout-explore--stick'>
-            {router.pathname !== '/explore' && (
-               <List title='Trends for you' src='explore'>
-                  {tags.slice(0, 4).map((tag) => (
-                     <News key={tag} tag={tag} />
-                  ))}
-
-                  {!tags && (
-                     <div style={{ textAlign: 'center' }}>
-                        <Loading />{' '}
-                     </div>
-                  )}
-               </List>
-            )}
-
             {router.pathname !== '/lists' && (
                <List
                   title={`Who to follow`}
