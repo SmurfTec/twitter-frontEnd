@@ -38,12 +38,16 @@ function FollowSuggestion({ suggestionUser, icon = true }) {
                         `https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${suggestionUser.name}`
                      }
                      onClick={() =>
-                        history.push(`/${suggestionUser._id}`)
+                        history.push(
+                           `/${suggestionUser.username}/${suggestionUser._id}`
+                        )
                      }
                   />
 
                   <div className='extra__FollowSuggestion--info'>
-                     <Link to={`${suggestionUser._id}`}>
+                     <Link
+                        to={`/${suggestionUser.username}/${suggestionUser._id}`}
+                     >
                         <TextBody bold>
                            {suggestionUser.username}
                         </TextBody>

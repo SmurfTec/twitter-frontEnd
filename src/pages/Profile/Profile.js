@@ -19,7 +19,7 @@ import { UserContext } from '../../context/UserContext';
 
 function Profile() {
    const { user } = useContext(UserContext);
-   const { handle } = useParams();
+   const { userId, userName } = useParams();
    const [profile, setProfile] = useState({});
    const [loading, setLoading] = useState(true);
    const [deadend, setDeadend] = useState(false);
@@ -32,22 +32,22 @@ function Profile() {
    useEffect(() => {
       console.log(`profile.followers`, profile.followers);
       profile.followers &&
-      profile.followers.includes(user && user._id)
+      profile.followers.includes(user && JSON.stringify(user._id))
          ? setIsFollowing(true)
          : setIsFollowing(false);
    }, [user, profile]);
 
    useEffect(() => {
       window.scrollTo(0, 0);
-      client(`/users/${handle}`)
+      client(`/users/username/${userName}`)
          .then((res) => {
             console.log('res', res);
             setLoading(false);
             setDeadend(false);
-            setProfile(res.user);
+            setProfile(res.data);
          })
          .catch((err) => setDeadend(true));
-   }, [handle]);
+   }, [userId]);
 
    if (!deadend && loading) {
       return (

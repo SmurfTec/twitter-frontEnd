@@ -55,7 +55,11 @@ function Router() {
 
             <Route exact path={`/profile`} component={User} />
 
-            <Route exact path={`/:handle`} component={Profile} />
+            <Route
+               exact
+               path={`/:userName/:userId`}
+               component={Profile}
+            />
             <Route
                exact
                path={`/:handle/status/:tweetId`}

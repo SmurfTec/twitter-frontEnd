@@ -87,14 +87,18 @@ function Tweet({ post }) {
                <Avatar
                   className=''
                   size='medium'
-                  onClick={() => history.push(`/${user._id}`)}
+                  onClick={() =>
+                     history.push(`${user.username}/${user._id}`)
+                  }
                />
             </div>
             <div className='page-tweet__body'>
                <div className='tweet-info-user'>
                   <TextBody
                      bold
-                     onClick={() => history.push(`/${user?._id}`)}
+                     onClick={() =>
+                        history.push(`/${user.username}/${user?._id}`)
+                     }
                   >
                      {user?.username}
                   </TextBody>
