@@ -30,35 +30,20 @@ const Home = () => {
 
       if (!user || user === null) return;
 
-      fetchUserFollowing(user);
 
-      setFeed(user.posts);
-      setLoading(false);
+      // (async () => {
+         // const res = await client(
+         //    `/users/feed`,
+         //    {},
+         //    'GET'
+         // );
+
+         
+      // })();
+         
+         setFeed(user.posts);
+         setLoading(false);
    }, [user]);
-
-   const fetchUserFollowing = async (user) => {
-      user.following &&
-         user.following.forEach((el) => {
-            (async () => {
-               const elPosts = await client(
-                  `/users/${el}/posts`,
-                  {},
-                  'GET'
-               );
-
-               console.log(`elPosts.user`, elPosts);
-
-               console.log(
-                  'morePosts.concat(elPosts.user)',
-                  morePosts.concat(elPosts.user)
-               );
-               if (elPosts.user && elPosts.user.length > 0)
-                  setMorePosts(morePosts.concat(elPosts.user));
-            })();
-         });
-
-      console.log('more posts', morePosts);
-   };
 
    return (
       <div className=''>
