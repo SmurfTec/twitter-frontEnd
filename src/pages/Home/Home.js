@@ -14,6 +14,7 @@ import './Home.css';
 import Button from '../../components/Button/Button';
 import TextTitle from '../../components/Text/title';
 import { UserContext } from '../../context/UserContext';
+import { CloudCircle } from '@material-ui/icons';
 
 const Home = () => {
    const { feed, setFeed } = useContext(FeedContext);
@@ -28,9 +29,30 @@ const Home = () => {
 
       if (!user || user === null) return;
 
+      fetchUserFollowing(user);
+
       setFeed(user.posts);
       setLoading(false);
    }, [user]);
+
+   const fetchUserFollowing = async (user) => {
+      let morePosts = [];
+      user.following &&
+         user.following.forEach((el) => {
+            (async () => {
+               const elPosts = await client(
+                  `/users/${el._id}/posts`,
+                  {},
+                  'GET'
+               );
+
+               if (elPosts && elPosts.length > 0)
+                  morePosts = morePosts.concat(elPosts);
+            })();
+         });
+
+      console.log('more posts', morePosts);
+   };
 
    return (
       <div className=''>
@@ -43,6 +65,11 @@ const Home = () => {
          {feed?.map((post) => (
             <Tweet key={post._id} post={post} />
          ))}
+
+         {morePosts &&
+            morePosts.map((post) => (
+               <Tweet key={post._id} post={post} />
+            ))}
 
          {loading && (
             <div className='loading'>

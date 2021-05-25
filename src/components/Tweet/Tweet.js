@@ -36,7 +36,6 @@ function Tweet({ post }) {
    const handle = user?.username;
 
    useEffect(() => {
-      console.clear();
       console.log(`user`, user);
       console.log(`post.likes`, post.likes);
       if (!post.likes || post.likes.length === 0) {
@@ -159,9 +158,6 @@ function Tweet({ post }) {
                      </Button>
                      <span>{likesState}</span>
                   </div>
-                  <Button icon href={`/${handle}/status/${_id}`}>
-                     <Share />
-                  </Button>
                </div>
             </div>
          </div>

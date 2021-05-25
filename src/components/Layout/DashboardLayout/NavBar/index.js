@@ -124,7 +124,7 @@ const NavBar = ({ onMobileClose, openMobile }) => {
                      {user.name}
                   </Typography>
                   <Typography color='textSecondary' variant='body2'>
-                     Admin
+                     {user.email}
                   </Typography>
                </Box>
                <Divider />

@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
       },
    },
    SearchBox: {
+      justifyContent: 'flex-end',
       '& .MuiFormControl-root': {
          maxWidth: 500,
          [genMediaQuery('xs')]: {
@@ -104,26 +105,28 @@ const Toolbar = ({
                      flexWrap='wrap'
                      className={classes.SearchBox}
                   >
-                     <TextField
-                        fullWidth
-                        InputProps={{
-                           startAdornment: (
-                              <InputAdornment position='start'>
-                                 <SvgIcon
-                                    fontSize='small'
-                                    color='action'
-                                 >
-                                    <SearchIcon />
-                                 </SvgIcon>
-                              </InputAdornment>
-                           ),
-                        }}
-                        placeholder='Search ...'
-                        variant='outlined'
-                        value={state.searchTxt}
-                        onChange={hanldeTxtChange}
-                        name='searchTxt'
-                     />
+                     {searchResults && (
+                        <TextField
+                           fullWidth
+                           InputProps={{
+                              startAdornment: (
+                                 <InputAdornment position='start'>
+                                    <SvgIcon
+                                       fontSize='small'
+                                       color='action'
+                                    >
+                                       <SearchIcon />
+                                    </SvgIcon>
+                                 </InputAdornment>
+                              ),
+                           }}
+                           placeholder='Search ...'
+                           variant='outlined'
+                           value={state.searchTxt}
+                           onChange={hanldeTxtChange}
+                           name='searchTxt'
+                        />
+                     )}
                      {user && user.role === 'user' && (
                         <Button
                            variant='contained'
@@ -157,7 +160,10 @@ const Toolbar = ({
          <AnswerQueryModal
             isOpen={questionIsOpen}
             closeDialog={toggleQuestionOpen}
-            createNew={addNewQuery}
+            createNew={() => {
+               toggleQuestionOpen();
+               addNewQuery();
+            }}
             condition={'Ask'}
          />
       </div>

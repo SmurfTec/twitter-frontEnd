@@ -1,50 +1,72 @@
 @import './veriables.css';
 
 * {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    outline: 0;
-    font: inherit;
-    color: inherit;
-  }
-  a {
-    text-decoration: none;
-  }
-  html {
-    font-size: 15px;
-  }
- 
-  body {
-    font-size: 1rem;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
-      Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-    background-color: var(--c-primary);
-    color: var(--c-text-color);
-  }
+   margin: 0;
+   padding: 0;
+   border: 0;
+   outline: 0;
+   font: inherit;
+   color: inherit;
+}
+a {
+   text-decoration: none;
+}
+html {
+   font-size: 15px;
+}
 
-  @media (min-width: 1000px){
+body {
+   font-size: 1rem;
+   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+      Helvetica, Arial, sans-serif, 'Apple Color Emoji',
+      'Segoe UI Emoji', 'Segoe UI Symbol';
+   background-color: var(--c-primary);
+   color: var(--c-text-color);
+}
+
+.loader {
+   margin: auto;
+   margin-top: 100px;
+   margin-bottom: 100px;
+   border: 16px solid #bdc3c7; /* Light grey */
+   border-top: 16px solid #1abc9c; /* Blue */
+   border-bottom: 16px solid #3498db;
+   border-radius: 50%;
+   width: 120px;
+   height: 120px;
+   animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+   0% {
+      transform: rotate(0deg);
+   }
+   100% {
+      transform: rotate(360deg);
+   }
+}
+@media (min-width: 1000px) {
    body {
       overflow-y: scroll;
-    }
-  }
+   }
+}
 
-  .loading {
-    height: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+.loading {
+   height: 300px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
 
-  .green:hover svg {
-    color: rgb(23, 191, 69);
-  }
-  .green:hover {
-    background-color: rgba(23, 191, 99, 0.1)
-  }
-  .red:hover svg {
-    color: rgb(224, 36, 94);
-  }
-  .red:hover  {
-    background-color: rgba(224, 36, 94, 0.1);
-  }
+.green:hover svg {
+   color: rgb(23, 191, 69);
+}
+.green:hover {
+   background-color: rgba(23, 191, 99, 0.1);
+}
+.red:hover svg {
+   color: rgb(224, 36, 94);
+}
+.red:hover {
+   background-color: rgba(224, 36, 94, 0.1);
+}

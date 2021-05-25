@@ -62,16 +62,6 @@ const Questions = () => {
       setFilteredQueries(queries);
    }, [queries]);
 
-   const searchResults = (searchTxt) => {
-      console.log('searchTxt', searchTxt);
-      const newQuerie = queries.filter((el) =>
-         el.question.toLowerCase().includes(searchTxt.toLowerCase())
-      );
-
-      console.log('newQuerie', newQuerie);
-      setFilteredQueries(newQuerie);
-   };
-
    const filterUsers = (criteria, filterRoleBy) => {
       toggleFilterDialog();
       let newQueries;
@@ -115,7 +105,6 @@ const Questions = () => {
       <Page className={classes.root} title='Users'>
          <Container maxWidth='lg'>
             <Toolbar
-               searchResults={searchResults}
                handleDelete={handleDelete}
                selectedUserIds={selectedUserIds}
                toggleFilter={toggleFilterDialog}

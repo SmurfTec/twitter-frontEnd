@@ -68,16 +68,6 @@ const Users = () => {
       setFilteredUsers(usersObj.supportUsers);
    }, [usersObj.supportUsers]);
 
-   const searchResults = (searchTxt) => {
-      console.log('searchTxt', searchTxt);
-      const newUsers = usersObj.supportUsers.filter((user) =>
-         user.name.toLowerCase().includes(searchTxt.toLowerCase())
-      );
-
-      console.log('newUsers', newUsers);
-      setFilteredUsers(newUsers);
-   };
-
    const createNewUser = (newUser) => {
       console.log('newuser', newUser);
       addNewUser(newUser);
@@ -127,7 +117,6 @@ const Users = () => {
       <Page className={classes.root} title='Users'>
          <Container maxWidth='lg'>
             <Toolbar
-               searchResults={searchResults}
                handleDelete={handleDelete}
                selectedUserIds={selectedUserIds}
                addUser={toggleAddNewuserDialog}

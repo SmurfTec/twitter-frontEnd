@@ -38,8 +38,6 @@ export const UserProvider = ({ children }) => {
          setToken(null);
          localStorage.removeItem('jwt');
          localStorage.removeItem('user');
-
-         toast.error('You Must Login First !!!');
       }
    };
 
@@ -126,6 +124,8 @@ export const UserProvider = ({ children }) => {
       setToken(null);
       localStorage.removeItem('user');
       localStorage.removeItem('jwt');
+
+      window.location.href = '/';
    };
 
    return (
