@@ -20,6 +20,7 @@ const Home = () => {
    const { feed, setFeed } = useContext(FeedContext);
    const { user } = useContext(UserContext);
    const [loading, setLoading] = useState(true);
+   const [morePosts, setMorePosts] = useState([]);
 
    useEffect(() => {
       window.scrollTo(0, 0);
@@ -36,18 +37,23 @@ const Home = () => {
    }, [user]);
 
    const fetchUserFollowing = async (user) => {
-      let morePosts = [];
       user.following &&
          user.following.forEach((el) => {
             (async () => {
                const elPosts = await client(
-                  `/users/${el._id}/posts`,
+                  `/users/${el}/posts`,
                   {},
                   'GET'
                );
 
-               if (elPosts && elPosts.length > 0)
-                  morePosts = morePosts.concat(elPosts);
+               console.log(`elPosts.user`, elPosts);
+
+               console.log(
+                  'morePosts.concat(elPosts.user)',
+                  morePosts.concat(elPosts.user)
+               );
+               if (elPosts.user && elPosts.user.length > 0)
+                  setMorePosts(morePosts.concat(elPosts.user));
             })();
          });
 
