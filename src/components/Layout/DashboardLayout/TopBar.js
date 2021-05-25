@@ -47,14 +47,18 @@ const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
             elevation={0}
             {...rest}
          >
-            <Toolbar>
+            <Toolbar
+               style={{
+                  backgroundColor: '#15ac59',
+               }}
+            >
                <RouterLink
                   to='/'
                   style={{
                      color: '#fff',
                   }}
                >
-                  <h3>Admin Dashboard</h3>
+                  <h3>Home</h3>
                </RouterLink>
                <Box flexGrow={1} />
                <Hidden mdDown>

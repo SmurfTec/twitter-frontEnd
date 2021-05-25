@@ -46,6 +46,14 @@ const adminItems = [
    },
 ];
 
+const supportItems = [
+   {
+      href: '/dashboard/support',
+      icon: Printer,
+      title: 'Support',
+   },
+];
+
 const useStyles = makeStyles(() => ({
    mobileDrawer: {
       width: 256,
@@ -72,8 +80,10 @@ const NavBar = ({ onMobileClose, openMobile }) => {
    useEffect(() => {
       if (!user || user === null) return;
 
-      if (user.role === 'admin' || user.role === 'support')
+      if (user.role === 'admin')
          setItems([...adminItems, ...generalItems]);
+      else if (user.role === 'support')
+         setItems([...supportItems, ...generalItems]);
       else setItems([...generalItems]);
    }, [user]);
 

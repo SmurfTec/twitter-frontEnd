@@ -27,7 +27,7 @@ function Router() {
    const { user } = useContext(UserContext);
 
    useEffect(() => {
-      client('/users').then((response) => {
+      client('/users?role=user').then((response) => {
          setWhoFollow(
             response.data.filter((user) => !user.isFollowing)
          );

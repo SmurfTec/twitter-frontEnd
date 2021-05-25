@@ -41,11 +41,29 @@ function Register({ setAuth }) {
       try {
          const data = await client('/users/signup', { body }, 'POST');
 
+         console.clear();
          console.log(`data`, data);
 
          const { token, user } = data;
          console.log(`token`, token);
          localStorage.setItem('token', token);
+
+         setUsername('');
+         setPassword('');
+         setEmail('');
+         setPasswordConfirm('');
+         toast.success(
+            `Signed Up Successfully! Plz activate your Account by Link sent to your Email ${user.email}`,
+            {
+               position: 'top-right',
+               autoClose: 5000,
+               hideProgressBar: false,
+               closeOnClick: true,
+               pauseOnHover: true,
+               draggable: true,
+               progress: undefined,
+            }
+         );
       } catch (err) {
          return toast.error(err.message);
       } finally {

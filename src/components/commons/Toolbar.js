@@ -14,7 +14,6 @@ import {
 } from '@material-ui/core';
 import {
    Search as SearchIcon,
-   Filter as FilterIcon,
    Trash2,
    UserPlus as UserAddIcon,
 } from 'react-feather';
@@ -83,15 +82,6 @@ const Toolbar = ({
    return (
       <div className={clsx(classes.root, className)} {...rest}>
          <Box display='flex' justifyContent='flex-end'>
-            <Button
-               color='primary'
-               variant='contained'
-               className={`${classes.exportButton} ${classes.ToolbarBtns}`}
-               onClick={toggleFilter}
-            >
-               Filter
-               <FilterIcon />
-            </Button>
             {addUser && (
                <Button
                   color='primary'

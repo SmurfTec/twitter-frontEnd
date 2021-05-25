@@ -60,8 +60,8 @@ const Users = () => {
 
    const searchResults = (searchTxt) => {
       console.log('searchTxt', searchTxt);
-      const newUsers = usersObj.users.filter((user) =>
-         user.name.toLowerCase().includes(searchTxt.toLowerCase())
+      const newUsers = usersObj.users.filter((el) =>
+         el.username.toLowerCase().includes(searchTxt.toLowerCase())
       );
 
       console.log('newUsers', newUsers);

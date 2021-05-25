@@ -93,7 +93,10 @@ const Results = ({
                                  >
                                     <Avatar
                                        className={classes.avatar}
-                                       src={user.image}
+                                       src={
+                                          user.avatar ||
+                                          `https://ui-avatars.com/api/?background=rgb(21,%20172,%2089)&color=fff&name=${user.username}`
+                                       }
                                     >
                                        {getInitials(user.name)}
                                     </Avatar>
