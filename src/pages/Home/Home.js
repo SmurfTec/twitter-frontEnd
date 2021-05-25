@@ -23,26 +23,22 @@ const Home = () => {
    const [morePosts, setMorePosts] = useState([]);
 
    useEffect(() => {
-      window.scrollTo(0, 0);
+      (async () => {
+         window.scrollTo(0, 0);
 
-      setLoading(true);
-      setFeed(null);
+         setLoading(true);
+         setFeed(null);
 
-      if (!user || user === null) return;
+         if (!user || user === null) return;
 
+         const res = await client(`/users/feed`, {}, 'GET');
 
-      // (async () => {
-         // const res = await client(
-         //    `/users/feed`,
-         //    {},
-         //    'GET'
-         // );
+         console.clear();
+         console.log(`res`, res);
 
-         
-      // })();
-         
-         setFeed(user.posts);
+         setFeed(res.data);
          setLoading(false);
+      })();
    }, [user]);
 
    return (

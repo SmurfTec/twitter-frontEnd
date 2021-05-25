@@ -11,7 +11,7 @@ import { Reply, Retweet, Like, Share, LikeFill } from '../icons';
 import './Tweet.css';
 import { UserContext } from '../../context/UserContext';
 
-function Tweet({ post }) {
+function Tweet({ post, pusername }) {
    const {
       _id,
       isLiked,
@@ -87,7 +87,11 @@ function Tweet({ post }) {
                   className=''
                   size='medium'
                   onClick={() =>
-                     history.push(`${user.username}/${user._id}`)
+                     history.push(
+                        `${pusername || post.user.username}/${
+                           post.user._id
+                        }`
+                     )
                   }
                />
             </div>
@@ -96,10 +100,14 @@ function Tweet({ post }) {
                   <TextBody
                      bold
                      onClick={() =>
-                        history.push(`/${user.username}/${user?._id}`)
+                        history.push(
+                           `/${pusername || post.user.username}/${
+                              post.user?._id
+                           }`
+                        )
                      }
                   >
-                     {user?.username}
+                     {pusername || post.user.username}
                   </TextBody>
                   <span className='secondary'>
                      {timeSince(createdAt)} ago
